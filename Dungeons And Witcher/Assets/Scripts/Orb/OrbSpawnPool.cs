@@ -1,0 +1,66 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class OrbSpawnPool : MonoBehaviour
+{
+    [SerializeField]
+    private List<GameObject> orbPrefabs;
+    public List<Queue<GameObject>> availableObjects;
+
+    public static OrbSpawnPool Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+        availableObjects = new List<Queue<GameObject>>
+        {
+            new Queue<GameObject>()
+        };
+    }
+
+    private void GrowPool(GameObject orb)
+    {
+        int i = GetOrbIndex(orb);
+        var InstanceToAdd = Instantiate(orb);
+        InstanceToAdd.transform.SetParent(transform);
+        AddToPool(InstanceToAdd);
+    }
+
+    public void AddToPool(GameObject instanceToAdd)
+    {
+        int index = GetOrbIndex(instanceToAdd);
+        instanceToAdd.SetActive(false);
+        availableObjects[index].Enqueue(instanceToAdd);
+    }
+
+    public bool CheckIfOrbInPool(GameObject orb)
+    {
+        return orbPrefabs.Contains(orb);
+    }
+    public void AddOrbToOrbPrefabs(GameObject orb)
+    {
+        orbPrefabs.Add(orb);
+        int i = GetOrbIndex(orb);
+        availableObjects.Add(new Queue<GameObject>());
+    }
+    public GameObject GetFromPool(GameObject orb)
+    {
+        int index = GetOrbIndex(orb);
+        if (availableObjects[index].Count == 0)
+        {
+            GrowPool(orb);
+        }
+        var instance = availableObjects[index].Dequeue();
+        instance.SetActive(true);
+        return instance;
+    }
+
+    public int GetOrbIndex(GameObject orb)
+    {
+        for (int i = 0; i < orbPrefabs.Count; i++)
+        {
+            if (orbPrefabs[i].name == orb.name.Replace("(Clone)", "").Trim()) return i;
+        }
+        return -1;
+    }
+}

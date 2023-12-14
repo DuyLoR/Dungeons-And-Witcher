@@ -11,7 +11,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Player
   - 
   - 
   - 
@@ -41,6 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 3711427513
+    locked: 0
   - name: Floors
     uniqueID: 1419849041
     locked: 0
@@ -52,6 +55,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 3494338849
+    locked: 0
+  - name: Weapon
+    uniqueID: 2126536413
     locked: 0
   - name: Floor Decoration
     uniqueID: 2653999235
