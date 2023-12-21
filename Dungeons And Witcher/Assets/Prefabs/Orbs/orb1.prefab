@@ -13,13 +13,14 @@ GameObject:
   - component: {fileID: 1256815274733799119}
   - component: {fileID: -5245349284265565259}
   - component: {fileID: 8349915883848362605}
+  - component: {fileID: -1521989998964456149}
   m_Layer: 0
   m_Name: orb1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2810099479888802358
 Transform:
   m_ObjectHideFlags: 0
@@ -28,9 +29,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8736335716243086389}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.39, y: 2.13, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.24, y: 0.24, z: 0.24}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -99,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be3574488c5f36445951bf8bc404b097, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeTime: 1
+  orbData: {fileID: 11400000, guid: e7de1c79eb62b7f41b162fd3131f8043, type: 2}
 --- !u!50 &-5245349284265565259
 Rigidbody2D:
   serializedVersion: 4
@@ -137,3 +138,15 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &-1521989998964456149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8736335716243086389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0985fd0299a74b4c8c8a59acbc9e945, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

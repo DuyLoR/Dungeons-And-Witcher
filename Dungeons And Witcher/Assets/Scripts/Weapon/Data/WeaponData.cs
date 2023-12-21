@@ -4,7 +4,10 @@ using UnityEngine;
 public class WeaponData : ScriptableObject
 {
     [SerializeField]
+    public GameObject weaponPrefab;
     public string WeaponName;
     public string WeaponDescription;
+
+    public OrbData[] orbDatas;
 
 }

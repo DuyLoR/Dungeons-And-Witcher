@@ -5,17 +5,13 @@ public class OrbSpawnPool : MonoBehaviour
 {
     [SerializeField]
     private List<GameObject> orbPrefabs;
-    public List<Queue<GameObject>> availableObjects;
+    public List<Queue<GameObject>> availableObjects = new List<Queue<GameObject>>();
 
     public static OrbSpawnPool Instance { get; private set; }
 
     private void Awake()
     {
         Instance = this;
-        availableObjects = new List<Queue<GameObject>>
-        {
-            new Queue<GameObject>()
-        };
     }
 
     private void GrowPool(GameObject orb)

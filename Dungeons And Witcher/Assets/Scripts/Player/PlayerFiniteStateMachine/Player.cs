@@ -8,15 +8,18 @@ public class Player : MonoBehaviour
     public PlayerDashState dashState { get; private set; }
     public PlayerInputHandle inputHandle { get; private set; }
     public Weapon weapon { get; private set; }
+    public PlayerCollector playerCollector { get; private set; }
 
     public Animator animator { get; private set; }
     public Rigidbody2D rb { get; private set; }
+    public Collider2D col { get; private set; }
 
     public int facingDirection { get; private set; }
 
     [SerializeField]
     private PlayerData playerData;
     private Vector2 workspace;
+
 
     public void Awake()
     {
@@ -32,20 +35,40 @@ public class Player : MonoBehaviour
         inputHandle = GetComponent<PlayerInputHandle>();
         weapon = GetComponentInChildren<Weapon>();
         animator = GetComponent<Animator>();
+        col = GetComponentInChildren<Collider2D>();
+        playerCollector = GetComponent<PlayerCollector>();
+        playerCollector = GetComponent<PlayerCollector>();
 
         stateMachine.Initialize(idleState);
+        playerCollector.Initialize(this);
         facingDirection = 1;
     }
     private void Update()
     {
         stateMachine.currentState.LogicUpdate();
+        // INVENTORY
+        if (InventoryManager.Instance.mainInventory != null)
+        {
+            InventoryManager.Instance.mainInventory.SetActive(inputHandle.inventoryInput);
+        }
+        if (!weapon.isSetStartWeapon)
+        {
+            weapon.SetWeaponData(InventoryManager.Instance.GetSeletedWeapon());
 
+        }
         //WEAPON
-        weapon.SetWeaponMouseTarget(inputHandle.mousePos);
-        FixPositionWeapon();
-        weapon.CheckIfAttack(inputHandle.attackInput);
-        //WEAPON
-        weapon.CheckIfShouldFlip(facingDirection);
+        if (inputHandle.isWeaponInput)
+        {
+            InventoryManager.Instance.ChangeSelectedWeaponSlot(inputHandle.ChangeWeaponInput);
+            weapon.SetWeaponData(InventoryManager.Instance.GetSeletedWeapon());
+        }
+        if (weapon.weaponData != null)
+        {
+            weapon.SetWeaponMouseTarget(inputHandle.mousePos);
+            FixPositionWeapon();
+            weapon.CheckIfAttack(inputHandle.attackInput && !inputHandle.inventoryInput);
+            weapon.CheckIfShouldFlip(facingDirection);
+        }
     }
     private void FixedUpdate()
     {

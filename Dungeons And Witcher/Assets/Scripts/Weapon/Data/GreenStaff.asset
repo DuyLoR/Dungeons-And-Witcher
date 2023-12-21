@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b6e9570f5660ec43b07bc8eb1c0e374, type: 3}
+  m_Name: GreenStaff
+  m_EditorClassIdentifier: 
+  weaponPrefab: {fileID: 7637685876544118, guid: 8c1d13841a515344891868f25ccf6125, type: 3}
+  WeaponName: Green
+  WeaponDescription: 
+  orbDatas:
+  - {fileID: 11400000, guid: efa17206faa396f408c792a1821fb378, type: 2}

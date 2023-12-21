@@ -1,13 +1,14 @@
 using System;
 using UnityEngine;
 
-public class Orb : MonoBehaviour
+public class Orb : MonoBehaviour, ICollectible
 {
-
+    public static Action<OrbData> OnOrbCollected;
     [SerializeField]
     public Rigidbody2D rb { get; private set; }
 
     [SerializeField]
+    public OrbData orbData;
     private float maxDistance = 10f;
 
     private Vector2 startingPos;
@@ -18,7 +19,6 @@ public class Orb : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         isActive = true;
     }
-
 
     private void Update()
     {
@@ -37,4 +37,9 @@ public class Orb : MonoBehaviour
         rb.velocity = (velocity).normalized * 30f;
     }
 
+    public void Collect()
+    {
+        Destroy(gameObject);
+        OnOrbCollected?.Invoke(orbData);
+    }
 }

@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c2dc4924c5674e468903918e6305276, type: 3}
   m_Name: PosionOrb
   m_EditorClassIdentifier: 
+  orbPrefab: {fileID: 8736335716243086389, guid: 25af7db388c2a0a43aefe4b5a2d34f11, type: 3}
   orbName: "Ng\u1ECDc \u0110\u1ED9c"
+  orbSprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  orbIcon: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
