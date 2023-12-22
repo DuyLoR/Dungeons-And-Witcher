@@ -24,19 +24,18 @@ public class WeaponInventorySlot : MonoBehaviour, IDropHandler
     {
         image.color = notSelectedColor;
     }
-    public WeaponInventorySlot(WeaponData weaponData)
-    {
-        AddToInventory();
-    }
-    public void AddToInventory()
-    {
-        isFull = true;
-    }
 
     public void OnDrop(PointerEventData eventData)
     {
         GameObject weaponDropped = eventData.pointerDrag;
         WeaponItem weaponItem = weaponDropped.GetComponent<WeaponItem>();
+        WeaponItem currentWeaponItem = GetComponentInChildren<WeaponItem>();
+        if (currentWeaponItem != null)
+        {
+            currentWeaponItem.SetParentAfterDrag(weaponItem.parentAfterDrag);
+            currentWeaponItem.SetTransform();
+        }
+
         weaponItem.SetParentAfterDrag(transform);
     }
 

@@ -8,14 +8,15 @@ public class WeaponItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     public Transform parentAfterDrag { get; private set; }
 
     private Image image;
-    private void Awake()
-    {
-        image = GetComponent<Image>();
-    }
     public void InitializeWeaponItem(WeaponData newWeapodata)
     {
         this.weaponData = newWeapodata;
+        image = GetComponent<Image>();
         image.sprite = weaponData.weaponPrefab.GetComponentInChildren<SpriteRenderer>().sprite;
+    }
+    public void InitalizeWeaponData(WeaponData newWeaponData)
+    {
+        this.weaponData = newWeaponData;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -41,5 +42,9 @@ public class WeaponItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     public void SetParentAfterDrag(Transform transform)
     {
         parentAfterDrag = transform;
+    }
+    public void SetTransform()
+    {
+        transform.SetParent(parentAfterDrag);
     }
 }

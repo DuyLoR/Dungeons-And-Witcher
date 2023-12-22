@@ -11523,6 +11523,7 @@ MonoBehaviour:
   weaponItemPrefab: {fileID: 2092610995598057077, guid: 4702420d7f2c4ec4689960050d09c062, type: 3}
   orbItemPrefab: {fileID: 607025950124456604, guid: cff645cd9da657249bfeea60139a101a, type: 3}
   mainInventory: {fileID: 0}
+  isChangeInventory: 1
 --- !u!4 &1503333013
 Transform:
   m_ObjectHideFlags: 0
@@ -11843,13 +11844,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1628936575}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d2b543a1b10f9df4aacdf88fb4fbd558, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponDatas: []
-  isAddStartedWeapon: 0
+  weaponOrbDatas: []
+  isSetStartWeapon: 0
 --- !u!1 &1656240461
 GameObject:
   m_ObjectHideFlags: 0
@@ -12581,8 +12582,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

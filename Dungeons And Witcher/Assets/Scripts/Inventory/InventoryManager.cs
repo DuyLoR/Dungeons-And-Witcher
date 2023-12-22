@@ -28,6 +28,8 @@ public class InventoryManager : MonoBehaviour
 
     private int selectedWeapon = -1;
     private int selectedOrb = -1;
+
+    public bool isChangeInventory = true;
     private void Awake()
     {
         Instance = this;
@@ -124,6 +126,8 @@ public class InventoryManager : MonoBehaviour
         }
         return null;
     }
+
+
     public void AddOrbCollected(OrbData orbData)
     {
         for (int i = 0; i < orbInventorySlots.Length; i++)

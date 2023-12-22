@@ -7,7 +7,7 @@ public class Weapon : MonoBehaviour, ICollectible
     public WeaponData weaponData { get; private set; }
     [SerializeField]
     public OrbData[] weaponOrbDatas;
-    public GameObject weapon { get; private set; }
+    public GameObject currentWeapon { get; private set; }
     public GameObject currentWeaponOrb { get; private set; }
     public Vector2 weaponDirection { get; private set; }
 
@@ -50,27 +50,33 @@ public class Weapon : MonoBehaviour, ICollectible
 
     public void SetWeaponData(WeaponData newWeaponData)
     {
+        if (weaponData == newWeaponData) return;
         if (!isSetStartWeapon)
         {
+            Instantiate(newWeaponData.weaponPrefab, transform);
             isSetStartWeapon = true;
         }
-        if (weaponData == newWeaponData) { return; }
         else
         {
-            Destroy(weapon);
+            if (newWeaponData == null)
+            {
+                transform.GetChild(0).gameObject.SetActive(false);
+                return;
+            }
+            else
+            {
+                transform.GetChild(0).gameObject.SetActive(true);
+            }
         }
-        weaponData = newWeaponData;
-        InitializeWeapon();
-    }
+        Destroy(transform.GetChild(0).gameObject);
+        Instantiate(newWeaponData.weaponPrefab, transform);
 
-    private void InitializeWeapon()
-    {
-        if (weaponData == null) return;
-        weapon = Instantiate(weaponData.weaponPrefab);
-        weapon.transform.SetParent(transform);
-        weapon.transform.localPosition = Vector3.zero;
-        spriteRenderer = weapon.GetComponent<SpriteRenderer>();
-        orbSpawnPoint = weapon.transform.Find("OrbSpawnPoint").transform;
+        weaponData = newWeaponData;
+        currentWeapon = transform.GetChild(0).gameObject;
+        currentWeapon.SetActive(weaponData != null);
+        currentWeapon.GetComponent<WeaponItem>().InitalizeWeaponData(weaponData);
+        spriteRenderer = currentWeapon?.GetComponent<SpriteRenderer>();
+        orbSpawnPoint = currentWeapon?.transform.Find("OrbSpawnPoint").transform;
     }
     #endregion
 
@@ -124,7 +130,7 @@ public class Weapon : MonoBehaviour, ICollectible
     {
         var angle = Mathf.Atan2(weaponDirection.y, weaponDirection.x) * Mathf.Rad2Deg;
         transform.localRotation = Quaternion.Euler(0, 0, angle - 90);
-        if (weapon != null) weapon.transform.localRotation = transform.rotation;
+        if (currentWeapon != null) currentWeapon.transform.localRotation = transform.rotation;
     }
 
     /// <summary>
