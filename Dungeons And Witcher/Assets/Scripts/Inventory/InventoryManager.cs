@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -126,8 +127,41 @@ public class InventoryManager : MonoBehaviour
         }
         return null;
     }
+    public int GetSeletedSlot()
+    {
+        return selectedWeapon;
+    }
+
+    public void UpdateInventory()
+    {
+        UpdateWeaponInventory();
+        UpdateOrbInventory();
+    }
 
 
+    private void UpdateWeaponInventory()
+    {
+        for (int i = 0; i < weaponInventorySlots.Length; i++)
+        {
+            WeaponInventorySlot weaponSlot = weaponInventorySlots[i];
+            WeaponItem weaponItemInSlot = weaponSlot.GetComponentInChildren<WeaponItem>();
+            GameObject currentWeapon = weaponInventory.GetChild(i).gameObject;
+            if (weaponItemInSlot != null)
+            {
+                Debug.Log(i + " " + currentWeapon.GetComponent<WeaponItem>().weaponData);
+                weaponItemInSlot.InitalizeWeaponData(currentWeapon.GetComponent<WeaponItem>().weaponData);
+            }
+            else
+            {
+                SpawnNewWeaponItem(currentWeapon.GetComponent<WeaponItem>().weaponData, weaponSlot);
+            }
+        }
+    }
+
+    private void UpdateOrbInventory()
+    {
+        throw new NotImplementedException();
+    }
     public void AddOrbCollected(OrbData orbData)
     {
         for (int i = 0; i < orbInventorySlots.Length; i++)

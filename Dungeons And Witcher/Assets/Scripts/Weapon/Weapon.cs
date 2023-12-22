@@ -4,6 +4,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour, ICollectible
 {
     public static event Action<WeaponData> OnWeaponCollected;
+    public static Weapon Instance;
     public WeaponData weaponData { get; private set; }
     [SerializeField]
     public OrbData[] weaponOrbDatas;
@@ -24,6 +25,7 @@ public class Weapon : MonoBehaviour, ICollectible
 
     private void Awake()
     {
+        Instance = this;
         facingDirection = 1;
         startTime = Time.time;
     }

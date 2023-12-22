@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class WeaponItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public WeaponData weaponData { get; private set; }
+    public WeaponData weaponData;
     public Transform parentAfterDrag { get; private set; }
 
     private Image image;
