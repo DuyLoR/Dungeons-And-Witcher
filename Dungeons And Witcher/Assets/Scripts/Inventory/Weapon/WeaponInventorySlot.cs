@@ -6,41 +6,38 @@ using UnityEngine.UI;
 [Serializable]
 public class WeaponInventorySlot : MonoBehaviour, IDropHandler
 {
+    public static event Action<GameObject, int> OnSlotChanged;
     public Color selectedColor, notSelectedColor;
 
-    private Image image;
-
-    public bool isFull { get; private set; }
     private void Awake()
     {
-        image = GetComponent<Image>();
         Deselect();
     }
     public void Select()
     {
-        image.color = selectedColor;
+        GetComponent<Image>().color = selectedColor;
     }
     public void Deselect()
     {
-        image.color = notSelectedColor;
+        GetComponent<Image>().color = notSelectedColor;
     }
 
     public void OnDrop(PointerEventData eventData)
     {
         GameObject weaponDropped = eventData.pointerDrag;
-        WeaponItem weaponItem = weaponDropped.GetComponent<WeaponItem>();
+        WeaponItem weaponItemMoveIn = weaponDropped.GetComponent<WeaponItem>();
         WeaponItem currentWeaponItem = GetComponentInChildren<WeaponItem>();
         if (currentWeaponItem != null)
         {
-            currentWeaponItem.SetParentAfterDrag(weaponItem.parentAfterDrag);
+            currentWeaponItem.SetParentAfterDrag(weaponItemMoveIn.parentAfterDrag);
             currentWeaponItem.SetTransform();
         }
-        weaponItem.SetParentAfterDrag(transform);
-        Weapon.Instance.SetWeaponData(InventoryManager.Instance.GetSeletedWeapon());
+        weaponItemMoveIn.SetParentAfterDrag(transform);
+        OnSlotChanged?.Invoke(gameObject, InventoryManager.Instance.GetSlotIndex(this));
     }
 
-    public void RemoveFromInventory()
+    public void RemoveItemFromInventory()
     {
-        isFull = false;
+        Destroy(transform.GetChild(0));
     }
 }

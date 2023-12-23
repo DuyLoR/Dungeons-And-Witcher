@@ -1,27 +1,18 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
-
-    [SerializeField]
-    public WeaponData[] startWeapons;
-    [SerializeField]
-    public OrbData[] startOrbs;
+    public InventoryData InventoryData;
     [SerializeField]
     public WeaponInventorySlot[] weaponInventorySlots;
     [SerializeField]
     public OrbInventorySlot[] orbInventorySlots;
 
     [SerializeField]
-    public GameObject weaponSlotPrefab;
-    [SerializeField]
-    public GameObject orbSlotPrefab;
-    [SerializeField]
-    public GameObject weaponItemPrefab;
-    [SerializeField]
-    public GameObject orbItemPrefab;
+    public Dictionary<int, WeaponData> weaponData;
 
     public GameObject mainInventory;
     private Transform weaponInventory;
@@ -34,24 +25,25 @@ public class InventoryManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-    }
-    private void Start()
-    {
-        weaponInventorySlots = new WeaponInventorySlot[3];
-        orbInventorySlots = new OrbInventorySlot[15];
+
         mainInventory = GameObject.Find("MainInventory");
         weaponInventory = GameObject.Find("WeaponInventory").transform;
         orbInventory = GameObject.Find("OrbInventory").transform;
 
+        weaponInventorySlots = new WeaponInventorySlot[InventoryData.maxWeaponIS];
+        orbInventorySlots = new OrbInventorySlot[InventoryData.maxOrbIS];
+    }
+    private void Start()
+    {
         GenerateWeaponSlot();
         GenerateOrbSlot();
-        for (int i = 0; i < startWeapons.Length; i++)
+        for (int i = 0; i < InventoryData.startWeaponDatas.Length; i++)
         {
-            AddWeapon(startWeapons[i]);
+            AddWeapon(InventoryData.startWeaponDatas[i]);
         }
-        for (int i = 0; i < startOrbs.Length; i++)
+        for (int i = 0; i < InventoryData.startOrbDatas.Length; i++)
         {
-            AddOrb(startOrbs[i]);
+            AddOrb(InventoryData.startOrbDatas[i]);
         }
         ChangeSelectedWeaponSlot(0);
         mainInventory.SetActive(false);
@@ -59,8 +51,15 @@ public class InventoryManager : MonoBehaviour
 
     private void OnEnable()
     {
+        WeaponInventorySlot.OnSlotChanged += WeaponInventorySlot_OnSlotChanged;
         Orb.OnOrbCollected += AddOrbCollected;
     }
+
+    private void WeaponInventorySlot_OnSlotChanged(GameObject obj, int index)
+    {
+        weaponInventorySlots[index] = obj.GetComponent<WeaponInventorySlot>();
+    }
+
     private void OnDisable()
     {
         Orb.OnOrbCollected -= AddOrbCollected;
@@ -79,7 +78,7 @@ public class InventoryManager : MonoBehaviour
     {
         for (int i = 0; i < orbInventorySlots.Length; i++)
         {
-            orbInventorySlots[i] = Instantiate(orbSlotPrefab, orbInventory.transform).GetComponent<OrbInventorySlot>();
+            orbInventorySlots[i] = Instantiate(InventoryData.orbSlotPrefab, orbInventory.transform).GetComponent<OrbInventorySlot>();
         }
     }
 
@@ -87,7 +86,7 @@ public class InventoryManager : MonoBehaviour
     {
         for (int i = 0; i < weaponInventorySlots.Length; i++)
         {
-            weaponInventorySlots[i] = Instantiate(weaponSlotPrefab, weaponInventory.transform).GetComponent<WeaponInventorySlot>();
+            weaponInventorySlots[i] = Instantiate(InventoryData.weaponSlotPrefab, weaponInventory.transform).GetComponent<WeaponInventorySlot>();
         }
     }
 
@@ -108,7 +107,7 @@ public class InventoryManager : MonoBehaviour
 
     private void SpawnNewWeaponItem(WeaponData weaponData, WeaponInventorySlot weaponSlot)
     {
-        GameObject newWeaponItem = Instantiate(weaponItemPrefab, weaponSlot.transform);
+        GameObject newWeaponItem = Instantiate(InventoryData.weaponItemPrefab, weaponSlot.transform);
         WeaponItem weaponItem = newWeaponItem.GetComponent<WeaponItem>();
         weaponItem.InitializeWeaponItem(weaponData);
     }
@@ -127,41 +126,11 @@ public class InventoryManager : MonoBehaviour
         }
         return null;
     }
-    public int GetSeletedSlot()
+    public int GetSlotIndex(WeaponInventorySlot slot)
     {
-        return selectedWeapon;
+        return Array.IndexOf(weaponInventorySlots, slot);
     }
 
-    public void UpdateInventory()
-    {
-        UpdateWeaponInventory();
-        UpdateOrbInventory();
-    }
-
-
-    private void UpdateWeaponInventory()
-    {
-        for (int i = 0; i < weaponInventorySlots.Length; i++)
-        {
-            WeaponInventorySlot weaponSlot = weaponInventorySlots[i];
-            WeaponItem weaponItemInSlot = weaponSlot.GetComponentInChildren<WeaponItem>();
-            GameObject currentWeapon = weaponInventory.GetChild(i).gameObject;
-            if (weaponItemInSlot != null)
-            {
-                Debug.Log(i + " " + currentWeapon.GetComponent<WeaponItem>().weaponData);
-                weaponItemInSlot.InitalizeWeaponData(currentWeapon.GetComponent<WeaponItem>().weaponData);
-            }
-            else
-            {
-                SpawnNewWeaponItem(currentWeapon.GetComponent<WeaponItem>().weaponData, weaponSlot);
-            }
-        }
-    }
-
-    private void UpdateOrbInventory()
-    {
-        throw new NotImplementedException();
-    }
     public void AddOrbCollected(OrbData orbData)
     {
         for (int i = 0; i < orbInventorySlots.Length; i++)
@@ -192,7 +161,7 @@ public class InventoryManager : MonoBehaviour
 
     private void SpawnNewOrbItem(OrbData orbData, OrbInventorySlot orbSlot)
     {
-        GameObject newOrbItem = Instantiate(orbItemPrefab, orbSlot.transform);
+        GameObject newOrbItem = Instantiate(InventoryData.orbItemPrefab, orbSlot.transform);
         OrbItem orbItem = newOrbItem.GetComponent<OrbItem>();
         orbItem.InitialiseOrbItem(orbData);
     }

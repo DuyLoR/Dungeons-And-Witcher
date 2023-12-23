@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     private PlayerData playerData;
     private Vector2 workspace;
 
+    private bool weaponHasBeenSet = false;
 
     public void Awake()
     {
@@ -47,15 +48,14 @@ public class Player : MonoBehaviour
     {
         stateMachine.currentState.LogicUpdate();
         // INVENTORY
-        if (InventoryManager.Instance.mainInventory != null)
-        {
-            InventoryManager.Instance.mainInventory.SetActive(inputHandle.inventoryInput);
-        }
-        if (!weapon.isSetStartWeapon)
-        {
-            weapon.SetWeaponData(InventoryManager.Instance.GetSeletedWeapon());
+        InventoryManager.Instance.mainInventory.SetActive(inputHandle.inventoryInput);
 
+        if (!weaponHasBeenSet)
+        {
+            weaponHasBeenSet = true;
+            weapon.InitializeWeapon(InventoryManager.Instance.GetSeletedWeapon());
         }
+
         //WEAPON
         if (inputHandle.isWeaponInput)
         {
@@ -68,6 +68,7 @@ public class Player : MonoBehaviour
             FixPositionWeapon();
             weapon.CheckIfAttack(inputHandle.attackInput && !inputHandle.inventoryInput);
             weapon.CheckIfShouldFlip(facingDirection);
+            weapon.RotationAngleOfWeapon();
         }
     }
     private void FixedUpdate()

@@ -4,7 +4,6 @@ using UnityEngine;
 public class Weapon : MonoBehaviour, ICollectible
 {
     public static event Action<WeaponData> OnWeaponCollected;
-    public static Weapon Instance;
     public WeaponData weaponData { get; private set; }
     [SerializeField]
     public OrbData[] weaponOrbDatas;
@@ -25,14 +24,12 @@ public class Weapon : MonoBehaviour, ICollectible
 
     private void Awake()
     {
-        Instance = this;
         facingDirection = 1;
         startTime = Time.time;
     }
 
     private void Update()
     {
-        RotationAngleOfWeapon();
         if (isAttack && Time.time >= startTime + timeDelay)
         {
             startTime = Time.time;
@@ -44,41 +41,42 @@ public class Weapon : MonoBehaviour, ICollectible
         }
     }
 
+    public void InitializeWeapon(WeaponData data)
+    {
+        weaponData = data;
+        currentWeapon = Instantiate(data.weaponPrefab, transform);
+        SetCurrentWeaponData();
+    }
+
     #region Set Funciton
     public void SetWeaponMouseTarget(Vector2 position)
     {
         weaponDirection = position - (Vector2)transform.position;
     }
 
+    public void SetCurrentWeaponData()
+    {
+        currentWeapon.GetComponent<WeaponItem>().InitalizeWeaponData(weaponData);
+        spriteRenderer = currentWeapon.GetComponentInChildren<SpriteRenderer>();
+        orbSpawnPoint = currentWeapon.transform.Find("OrbSpawnPoint").transform;
+    }
     public void SetWeaponData(WeaponData newWeaponData)
     {
         if (weaponData == newWeaponData) return;
-        if (!isSetStartWeapon)
+        weaponData = newWeaponData;
+        if (weaponData == null)
         {
-            Instantiate(newWeaponData.weaponPrefab, transform);
-            isSetStartWeapon = true;
+            if (currentWeapon != null)
+            {
+                Destroy(currentWeapon);
+            }
+            return;
         }
         else
         {
-            if (newWeaponData == null)
-            {
-                transform.GetChild(0).gameObject.SetActive(false);
-                return;
-            }
-            else
-            {
-                transform.GetChild(0).gameObject.SetActive(true);
-            }
+            Destroy(currentWeapon);
+            InitializeWeapon(weaponData);
         }
-        Destroy(transform.GetChild(0).gameObject);
-        Instantiate(newWeaponData.weaponPrefab, transform);
-
-        weaponData = newWeaponData;
-        currentWeapon = transform.GetChild(0).gameObject;
-        currentWeapon.SetActive(weaponData != null);
-        currentWeapon.GetComponent<WeaponItem>().InitalizeWeaponData(weaponData);
-        spriteRenderer = currentWeapon?.GetComponent<SpriteRenderer>();
-        orbSpawnPoint = currentWeapon?.transform.Find("OrbSpawnPoint").transform;
     }
     #endregion
 
@@ -106,7 +104,6 @@ public class Weapon : MonoBehaviour, ICollectible
     public void Flip()
     {
         facingDirection *= -1;
-        spriteRenderer = weaponData.weaponPrefab.GetComponentInChildren<SpriteRenderer>();
         spriteRenderer.flipX = facingDirection == 1 ? true : false;
     }
     private void AddNewOrbInPool(OrbData[] newOrbDatas)
@@ -128,11 +125,11 @@ public class Weapon : MonoBehaviour, ICollectible
         currentWeaponOrbIndex = (currentWeaponOrbIndex + 1) % weaponData.orbDatas.Length;
         currentWeaponOrb = weaponData.orbDatas[currentWeaponOrbIndex].orbPrefab;
     }
-    private void RotationAngleOfWeapon()
+    public void RotationAngleOfWeapon()
     {
         var angle = Mathf.Atan2(weaponDirection.y, weaponDirection.x) * Mathf.Rad2Deg;
         transform.localRotation = Quaternion.Euler(0, 0, angle - 90);
-        if (currentWeapon != null) currentWeapon.transform.localRotation = transform.rotation;
+        currentWeapon.transform.localRotation = transform.rotation;
     }
 
     /// <summary>

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3e3d003b77e8254f9c739f4f0cf8bf2, type: 3}
+  m_Name: BaseInventory
+  m_EditorClassIdentifier: 
+  weaponSlotPrefab: {fileID: 2466571188934601450, guid: ca271aca99d5aae49a1939d32a643201, type: 3}
+  weaponItemPrefab: {fileID: 2092610995598057077, guid: 4702420d7f2c4ec4689960050d09c062, type: 3}
+  orbSlotPrefab: {fileID: 8465765911139458831, guid: c88cfcce16662d64ebb0b7e6b3189951, type: 3}
+  orbItemPrefab: {fileID: 607025950124456604, guid: cff645cd9da657249bfeea60139a101a, type: 3}
+  startWeaponDatas:
+  - {fileID: 11400000, guid: 1eebc5574173ee54ba9309c96308bfb4, type: 2}
+  - {fileID: 11400000, guid: 0c1a25ce2300be543b5d6fa962d5d88c, type: 2}
+  startOrbDatas:
+  - {fileID: 11400000, guid: efa17206faa396f408c792a1821fb378, type: 2}
+  maxWeaponIS: 3
+  maxOrbIS: 14
