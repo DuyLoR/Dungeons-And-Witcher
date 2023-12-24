@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class WeaponItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class WeaponItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    public static event Action<WeaponData> OnWeaponCollected;
     public WeaponData weaponData;
     public Transform parentAfterDrag { get; private set; }
 
@@ -46,5 +48,11 @@ public class WeaponItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     public void SetTransform()
     {
         transform.SetParent(parentAfterDrag);
+    }
+
+    public void Collect()
+    {
+        Destroy(gameObject);
+        OnWeaponCollected?.Invoke(weaponData);
     }
 }

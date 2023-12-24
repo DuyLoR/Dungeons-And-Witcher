@@ -6,7 +6,7 @@ using UnityEngine.UI;
 [Serializable]
 public class WeaponInventorySlot : MonoBehaviour, IDropHandler
 {
-    public static event Action<GameObject, int> OnSlotChanged;
+    public static event Action OnSlotChanged;
     public Color selectedColor, notSelectedColor;
 
     private void Awake()
@@ -25,19 +25,21 @@ public class WeaponInventorySlot : MonoBehaviour, IDropHandler
     public void OnDrop(PointerEventData eventData)
     {
         GameObject weaponDropped = eventData.pointerDrag;
-        WeaponItem weaponItemMoveIn = weaponDropped.GetComponent<WeaponItem>();
+        WeaponItem weaponItemDrag = weaponDropped.GetComponent<WeaponItem>();
         WeaponItem currentWeaponItem = GetComponentInChildren<WeaponItem>();
         if (currentWeaponItem != null)
         {
-            currentWeaponItem.SetParentAfterDrag(weaponItemMoveIn.parentAfterDrag);
+            currentWeaponItem.SetParentAfterDrag(weaponItemDrag.parentAfterDrag);
             currentWeaponItem.SetTransform();
         }
-        weaponItemMoveIn.SetParentAfterDrag(transform);
-        OnSlotChanged?.Invoke(gameObject, InventoryManager.Instance.GetSlotIndex(this));
+        weaponItemDrag.SetParentAfterDrag(transform);
+        weaponItemDrag.SetTransform();
+        OnSlotChanged?.Invoke();
     }
 
     public void RemoveItemFromInventory()
     {
-        Destroy(transform.GetChild(0));
+        Transform dropPosition = GameObject.Find("Player").transform;
+        transform.GetChild(0).position = dropPosition.position;
     }
 }

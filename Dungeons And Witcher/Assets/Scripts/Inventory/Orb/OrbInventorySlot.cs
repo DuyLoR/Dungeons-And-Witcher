@@ -5,28 +5,25 @@ using UnityEngine.EventSystems;
 [Serializable]
 public class OrbInventorySlot : MonoBehaviour, IDropHandler
 {
-    public OrbData orbData { get; private set; }
-    public bool isFull { get; private set; }
-    public OrbInventorySlot(OrbData orbData)
-    {
-        this.orbData = orbData;
-        AddToInventory();
-    }
-
-    public void AddToInventory()
-    {
-        isFull = true;
-    }
-
+    public static event Action OnSlotChanged;
     public void OnDrop(PointerEventData eventData)
     {
         GameObject orbDropped = eventData.pointerDrag;
-        OrbItem orbItem = orbDropped.GetComponent<OrbItem>();
-        orbItem.SetParentAfterDrag(transform);
+        OrbItem orbItemDrag = orbDropped.GetComponent<OrbItem>();
+        OrbItem currentOrbItem = GetComponentInChildren<OrbItem>();
+        if (currentOrbItem != null)
+        {
+            currentOrbItem.SetParentAfterDrag(orbItemDrag.parentAfterDrag);
+            currentOrbItem.SetTransform();
+        }
+        orbItemDrag.SetParentAfterDrag(transform);
+        orbItemDrag.SetTransform();
+        OnSlotChanged?.Invoke();
     }
     public void RemoveFromInventory()
     {
-        isFull = false;
+        Transform dropPosition = GameObject.Find("Player").transform;
+        transform.GetChild(0).position = dropPosition.position;
     }
 
 }

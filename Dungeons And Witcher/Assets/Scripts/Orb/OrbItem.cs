@@ -1,10 +1,12 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class OrbItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class OrbItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public OrbData orbData { get; private set; }
+    public static event Action<OrbData> OnOrbCollected;
+    public OrbData orbData;
     public Transform parentAfterDrag { get; private set; }
 
     private Image image;
@@ -37,5 +39,15 @@ public class OrbItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragH
     public void SetParentAfterDrag(Transform transform)
     {
         parentAfterDrag = transform;
+    }
+    public void SetTransform()
+    {
+        transform.SetParent(parentAfterDrag);
+    }
+
+    public void Collect()
+    {
+        Destroy(gameObject);
+        OnOrbCollected?.Invoke(orbData);
     }
 }

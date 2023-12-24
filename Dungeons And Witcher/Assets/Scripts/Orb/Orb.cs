@@ -1,9 +1,7 @@
-using System;
 using UnityEngine;
 
-public class Orb : MonoBehaviour, ICollectible
+public class Orb : MonoBehaviour
 {
-    public static Action<OrbData> OnOrbCollected;
     [SerializeField]
     public Rigidbody2D rb { get; private set; }
 
@@ -35,11 +33,5 @@ public class Orb : MonoBehaviour, ICollectible
     public void SetVelocity(Vector2 velocity)
     {
         rb.velocity = (velocity).normalized * 30f;
-    }
-
-    public void Collect()
-    {
-        Destroy(gameObject);
-        OnOrbCollected?.Invoke(orbData);
     }
 }

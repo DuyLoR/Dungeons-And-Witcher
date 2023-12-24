@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandle : MonoBehaviour
 {
+    public static PlayerInputHandle Instance;
     public Vector2 rawMovementInput { get; private set; }
     public Vector2 mousePos { get; private set; }
 
@@ -18,6 +19,7 @@ public class PlayerInputHandle : MonoBehaviour
     }
     private void Awake()
     {
+        Instance = this;
         ChangeWeaponInput = 0;
     }
     public void OnMovementInput(InputAction.CallbackContext context)

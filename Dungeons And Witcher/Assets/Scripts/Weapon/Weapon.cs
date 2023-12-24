@@ -1,9 +1,7 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Weapon : MonoBehaviour, ICollectible
+public class Weapon : MonoBehaviour
 {
-    public static event Action<WeaponData> OnWeaponCollected;
     public WeaponData weaponData { get; private set; }
     [SerializeField]
     public OrbData[] weaponOrbDatas;
@@ -24,8 +22,14 @@ public class Weapon : MonoBehaviour, ICollectible
 
     private void Awake()
     {
+        WeaponInventorySlot.OnSlotChanged += WeaponInventorySlot_OnSlotChanged;
         facingDirection = 1;
         startTime = Time.time;
+    }
+
+    private void WeaponInventorySlot_OnSlotChanged()
+    {
+        SetWeaponData(InventoryManager.Instance.GetSeletedWeapon());
     }
 
     private void Update()
@@ -104,7 +108,7 @@ public class Weapon : MonoBehaviour, ICollectible
     public void Flip()
     {
         facingDirection *= -1;
-        spriteRenderer.flipX = facingDirection == 1 ? true : false;
+        spriteRenderer.flipX = facingDirection == -1 ? true : false;
     }
     private void AddNewOrbInPool(OrbData[] newOrbDatas)
     {
@@ -128,8 +132,7 @@ public class Weapon : MonoBehaviour, ICollectible
     public void RotationAngleOfWeapon()
     {
         var angle = Mathf.Atan2(weaponDirection.y, weaponDirection.x) * Mathf.Rad2Deg;
-        transform.localRotation = Quaternion.Euler(0, 0, angle - 90);
-        currentWeapon.transform.localRotation = transform.rotation;
+        transform.rotation = Quaternion.Euler(0, 0, angle - 90);
     }
 
     /// <summary>
@@ -139,11 +142,6 @@ public class Weapon : MonoBehaviour, ICollectible
     public void ChangePosition(Vector3 newPosition)
     {
         transform.localPosition = newPosition;
-    }
-    public void Collect()
-    {
-        Destroy(gameObject);
-        OnWeaponCollected?.Invoke(weaponData);
     }
     #endregion
 }
