@@ -21,6 +21,7 @@ public class OrbInventorySlot : MonoBehaviour, IDropHandler
     public void RemoveItemFromInventory(OrbData orbData)
     {
         if (orbData == null) return;
+        if (transform.childCount <= 0) return;
         var currentOrb = transform.GetChild(0);
         if (currentOrb != null)
         {

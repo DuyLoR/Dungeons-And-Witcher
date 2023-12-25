@@ -8,6 +8,7 @@ public class OrbItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragHand
     public static event Action<OrbData> OnOrbCollected;
     public OrbData orbData;
     public Transform parentAfterDrag { get; private set; }
+    public GameObject gameObjectToDropped { get; private set; }
 
     private Image image;
     public void InitialiseOrbItem(OrbData neworbData)
@@ -34,11 +35,16 @@ public class OrbItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragHand
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (gameObjectToDropped == null)
+        {
+            Destroy(gameObject);
+        }
         transform.SetParent(parentAfterDrag);
         image.raycastTarget = true;
     }
     public void SetParentAfterDrag(Transform transform)
     {
+        gameObjectToDropped = transform.gameObject;
         parentAfterDrag = transform;
     }
     public void SetTransform()

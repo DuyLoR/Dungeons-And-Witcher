@@ -38,12 +38,13 @@ public class WeaponInventorySlot : MonoBehaviour, IDropHandler
     public void RemoveItemFromInventory(WeaponData weaponData)
     {
         if (weaponData == null) return;
+        if (transform.childCount <= 0) return;
         var currentWeapon = transform.GetChild(0);
         if (currentWeapon != null)
         {
+            Destroy(currentWeapon.gameObject);
             var newItem = Instantiate(weaponData.weaponPrefab);
             newItem.transform.position = GameObject.FindWithTag("Player").transform.position;
-            Destroy(currentWeapon.gameObject);
         }
     }
 }

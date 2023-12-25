@@ -128,6 +128,18 @@ public class InventoryManager : MonoBehaviour
         weaponItem.InitializeWeaponItem(weaponData);
     }
 
+    public void RemoveWeapon(Transform parent, WeaponData weaponData)
+    {
+        for (int i = 0; i < weaponInventorySlots.Length; i++)
+        {
+            WeaponInventorySlot weaponSlot = weaponInventorySlots[i];
+            if (weaponSlot.gameObject == parent.gameObject)
+            {
+                weaponInventorySlots[i].RemoveItemFromInventory(weaponData);
+            }
+        }
+    }
+
     public WeaponData GetSeletedWeapon()
     {
         WeaponInventorySlot weaponSlot = weaponInventorySlots[selectedWeapon];
@@ -186,8 +198,16 @@ public class InventoryManager : MonoBehaviour
         orbItem.InitialiseOrbItem(orbData);
     }
 
-    public void RemoveOrb(OrbData orbData)
+    public void RemoveOrb(Transform parent, OrbData orbData)
     {
+        for (int i = 0; i < weaponInventorySlots.Length; i++)
+        {
+            OrbInventorySlot orbSlot = orbInventorySlots[i];
+            if (orbSlot.gameObject == parent.gameObject)
+            {
+                orbInventorySlots[i].RemoveItemFromInventory(orbData);
+            }
+        }
     }
     public OrbData GetFirstOrb()
     {

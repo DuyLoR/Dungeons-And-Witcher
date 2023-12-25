@@ -8,6 +8,7 @@ public class WeaponItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragH
     public static event Action<WeaponData> OnWeaponCollected;
     public WeaponData weaponData;
     public Transform parentAfterDrag { get; private set; }
+    public GameObject gameObjectToDropped { get; private set; }
 
     private Image image;
     public void InitializeWeaponItem(WeaponData newWeapodata)
@@ -37,17 +38,27 @@ public class WeaponItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragH
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (gameObjectToDropped == null)
+        {
+            Destroy(gameObject);
+        }
         transform.SetParent(parentAfterDrag);
         image.raycastTarget = true;
     }
 
     public void SetParentAfterDrag(Transform transform)
     {
+        gameObjectToDropped = transform.gameObject;
         parentAfterDrag = transform;
     }
     public void SetTransform()
     {
         transform.SetParent(parentAfterDrag);
+    }
+
+    public void SetPosition(Vector3 position)
+    {
+        transform.position = position;
     }
 
     public void Collect()
