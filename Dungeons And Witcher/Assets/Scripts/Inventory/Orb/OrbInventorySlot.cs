@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 [Serializable]
 public class OrbInventorySlot : MonoBehaviour, IDropHandler
 {
-    public static event Action OnSlotChanged;
     public void OnDrop(PointerEventData eventData)
     {
         GameObject orbDropped = eventData.pointerDrag;
@@ -18,12 +17,17 @@ public class OrbInventorySlot : MonoBehaviour, IDropHandler
         }
         orbItemDrag.SetParentAfterDrag(transform);
         orbItemDrag.SetTransform();
-        OnSlotChanged?.Invoke();
     }
-    public void RemoveFromInventory()
+    public void RemoveItemFromInventory(OrbData orbData)
     {
-        Transform dropPosition = GameObject.Find("Player").transform;
-        transform.GetChild(0).position = dropPosition.position;
+        if (orbData == null) return;
+        var currentOrb = transform.GetChild(0);
+        if (currentOrb != null)
+        {
+            var newItem = Instantiate(orbData.orbPrefab);
+            newItem.transform.position = GameObject.FindWithTag("Player").transform.position;
+            Destroy(currentOrb.gameObject);
+        }
     }
 
 }

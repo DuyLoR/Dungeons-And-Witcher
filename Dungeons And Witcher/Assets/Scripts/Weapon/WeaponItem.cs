@@ -15,12 +15,12 @@ public class WeaponItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragH
         this.weaponData = newWeapodata;
         image = GetComponent<Image>();
         image.sprite = weaponData.weaponPrefab.GetComponentInChildren<SpriteRenderer>().sprite;
+        image.preserveAspect = true;
     }
     public void InitalizeWeaponData(WeaponData newWeaponData)
     {
         this.weaponData = newWeaponData;
     }
-
     public void OnBeginDrag(PointerEventData eventData)
     {
         parentAfterDrag = transform.parent;

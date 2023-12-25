@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be3574488c5f36445951bf8bc404b097, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 10
+  orbData: {fileID: 11400000, guid: efa17206faa396f408c792a1821fb378, type: 2}
 --- !u!50 &7144559184246520797
 Rigidbody2D:
   serializedVersion: 4

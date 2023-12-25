@@ -13,3 +13,11 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   movementVelocity: 10
+  dashCooldown: 1
+  dashVelocity: 20
+  dashTime: 0.4
+  collectRadius: 1
+  canCollectLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  weapon: []

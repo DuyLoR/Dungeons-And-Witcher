@@ -11,6 +11,11 @@ public class PlayerData : ScriptableObject
     public float dashVelocity = 20f;
     public float dashTime = 0.4f;
 
+
+    [Header("Collect")]
+    public float collectRadius = 1f;
+    public LayerMask canCollectLayer;
+
     [Header("Attack State")]
     public Weapon[] weapon;
 }

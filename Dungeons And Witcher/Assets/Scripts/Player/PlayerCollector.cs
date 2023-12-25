@@ -34,6 +34,14 @@ public class PlayerCollector : MonoBehaviour
             collectiblesInRange.Add(collectible);
         }
     }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        ICollectible collectible = collision.GetComponent<ICollectible>();
+        if (collectible != null && !collectiblesInRange.Contains(collectible))
+        {
+            collectiblesInRange.Add(collectible);
+        }
+    }
 
     private void OnTriggerExit2D(Collider2D collision)
     {

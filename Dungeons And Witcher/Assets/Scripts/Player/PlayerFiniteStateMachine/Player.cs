@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     public int facingDirection { get; private set; }
 
     [SerializeField]
-    private PlayerData playerData;
+    public PlayerData playerData;
     private Vector2 workspace;
 
     private bool weaponHasBeenSet = false;
@@ -49,6 +49,7 @@ public class Player : MonoBehaviour
         stateMachine.currentState.LogicUpdate();
         // INVENTORY
         InventoryManager.Instance.mainInventory.SetActive(inputHandle.inventoryInput);
+        InventoryManager.Instance.orbInventory.SetActive(inputHandle.inventoryInput);
 
         if (!weaponHasBeenSet)
         {

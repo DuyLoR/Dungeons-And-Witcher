@@ -4,7 +4,6 @@ public class Weapon : MonoBehaviour
 {
     public WeaponData weaponData { get; private set; }
     [SerializeField]
-    public OrbData[] weaponOrbDatas;
     public GameObject currentWeapon { get; private set; }
     public GameObject currentWeaponOrb { get; private set; }
     public Vector2 weaponDirection { get; private set; }
@@ -18,22 +17,19 @@ public class Weapon : MonoBehaviour
     private float timeDelay = 0.2f;
 
     private bool isAttack;
-    public bool isSetStartWeapon = false;
 
     private void Awake()
     {
-        WeaponInventorySlot.OnSlotChanged += WeaponInventorySlot_OnSlotChanged;
         facingDirection = 1;
         startTime = Time.time;
     }
 
-    private void WeaponInventorySlot_OnSlotChanged()
-    {
-        SetWeaponData(InventoryManager.Instance.GetSeletedWeapon());
-    }
-
     private void Update()
     {
+        if (weaponData != InventoryManager.Instance.GetSeletedWeapon())
+        {
+            SetWeaponData(InventoryManager.Instance.GetSeletedWeapon());
+        }
         if (isAttack && Time.time >= startTime + timeDelay)
         {
             startTime = Time.time;
@@ -123,8 +119,9 @@ public class Weapon : MonoBehaviour
     }
     private void FireOrb()
     {
-        var orb = OrbSpawnPool.Instance.GetFromPool(currentWeaponOrb).GetComponent<Orb>();
-        if (orb == null) return;
+        if (weaponData.orbDatas.Length == 0) return;
+        currentWeaponOrb = weaponData.orbDatas[0].orbPrefab;
+        var orb = OrbSpawnPool.Instance.GetFromPool(currentWeaponOrb)?.AddComponent<Orb>();
         ChangeDataCurrentOrb(orb);
         currentWeaponOrbIndex = (currentWeaponOrbIndex + 1) % weaponData.orbDatas.Length;
         currentWeaponOrb = weaponData.orbDatas[currentWeaponOrbIndex].orbPrefab;

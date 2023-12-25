@@ -15,6 +15,7 @@ public class OrbItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragHand
         this.orbData = neworbData;
         image = GetComponent<Image>();
         image.sprite = orbData.orbPrefab.GetComponent<SpriteRenderer>().sprite;
+        image.preserveAspect = true;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
