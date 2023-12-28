@@ -2,19 +2,18 @@ using UnityEngine;
 
 public class EnemyState
 {
-    protected Entity entity;
+    protected Enemy enemy;
     protected EnemyStateMachine stateMachine;
-    protected EnemyData enemyData;
 
     protected float startTime;
 
     private string animName;
-    public EnemyState(Entity entity, EnemyStateMachine stateMachine, EnemyData enemyData, string animName)
+    public EnemyState(Enemy enemy, EnemyStateMachine stateMachine, string animName)
     {
+
         this.animName = animName;
-        this.entity = entity;
+        this.enemy = enemy;
         this.stateMachine = stateMachine;
-        this.enemyData = enemyData;
         this.animName = animName;
     }
 
@@ -22,11 +21,12 @@ public class EnemyState
     {
         DoCheck();
         startTime = Time.time;
+        enemy.animator.Play(animName);
     }
 
     public virtual void Exit()
     {
-
+        enemy.animator.StopPlayback();
     }
 
     public virtual void LogicUpdate()
