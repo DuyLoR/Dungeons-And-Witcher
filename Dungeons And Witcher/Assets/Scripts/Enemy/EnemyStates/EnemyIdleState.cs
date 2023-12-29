@@ -10,7 +10,7 @@ public class EnemyIdleState : EnemyState
     protected bool flipAfterIdle;
     protected bool isIdleTimeOver;
 
-    public EnemyIdleState(Enemy enemy, EnemyStateMachine stateMachine, string animName, EnemyIdleStateData stateData) : base(enemy, stateMachine, animName)
+    public EnemyIdleState(EnemyBase enemyBase, EnemyStateMachine stateMachine, string animName, EnemyIdleStateData stateData) : base(enemyBase, stateMachine, animName)
     {
         this.stateData = stateData;
     }
@@ -23,7 +23,7 @@ public class EnemyIdleState : EnemyState
     public override void Enter()
     {
         base.Enter();
-        enemy.SetVelocity(0f);
+        enemyBase.SetVelocity(0f);
         isIdleTimeOver = false;
         SetRandomIdleTime();
     }
@@ -33,7 +33,7 @@ public class EnemyIdleState : EnemyState
         base.Exit();
         if (flipAfterIdle)
         {
-            enemy.Flip();
+            enemyBase.Flip();
         }
     }
 

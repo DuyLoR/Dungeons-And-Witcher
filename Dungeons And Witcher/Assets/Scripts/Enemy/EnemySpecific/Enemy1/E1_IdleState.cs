@@ -1,9 +1,10 @@
 public class E1_IdleState : EnemyIdleState
 {
-    private Enemy1 enemy1;
-    public E1_IdleState(Enemy enemy, EnemyStateMachine stateMachine, string animName, EnemyIdleStateData stateData, Enemy1 enemy1) : base(enemy, stateMachine, animName, stateData)
+    private Enemy1 enemy;
+
+    public E1_IdleState(EnemyBase enemyBase, EnemyStateMachine stateMachine, string animName, EnemyIdleStateData stateData, Enemy1 enemy) : base(enemyBase, stateMachine, animName, stateData)
     {
-        this.enemy1 = enemy1;
+        this.enemy = enemy;
     }
 
     public override void DoCheck()
@@ -27,7 +28,7 @@ public class E1_IdleState : EnemyIdleState
 
         if (isIdleTimeOver)
         {
-            stateMachine.ChangeState(enemy1.moveState);
+            stateMachine.ChangeState(enemy.moveState);
         }
     }
 

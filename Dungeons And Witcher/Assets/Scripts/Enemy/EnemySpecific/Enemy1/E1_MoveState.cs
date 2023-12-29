@@ -1,10 +1,10 @@
 public class E1_MoveState : EnemyMoveState
 {
-    private Enemy1 enemy1;
+    private Enemy1 enemy;
 
-    public E1_MoveState(Enemy enemy, EnemyStateMachine stateMachine, string animName, EnemyMoveStateData stateData, Enemy1 enemy1) : base(enemy, stateMachine, animName, stateData)
+    public E1_MoveState(EnemyBase enemyBase, EnemyStateMachine stateMachine, string animName, EnemyMoveStateData stateData, Enemy1 enemy) : base(enemyBase, stateMachine, animName, stateData)
     {
-        this.enemy1 = enemy1;
+        this.enemy = enemy;
     }
 
     public override void Enter()
@@ -22,8 +22,8 @@ public class E1_MoveState : EnemyMoveState
         base.LogicUpdate();
 
         //Add if
-        enemy1.idleState.SetFlipAfterIdle(true);
-        stateMachine.ChangeState(enemy1.idleState);
+        enemy.idleState.SetFlipAfterIdle(true);
+        stateMachine.ChangeState(enemy.idleState);
     }
 
     public override void PhysicsUpdate()

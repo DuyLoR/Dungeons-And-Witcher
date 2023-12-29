@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class EnemyBase : MonoBehaviour
 {
     public EnemyStateMachine stateMachine;
-    public EnemyData enemyData;
+    public EnemyBaseData enemyBaseData;
 
     public Rigidbody2D rb { get; private set; }
     public Animator animator { get; private set; }
