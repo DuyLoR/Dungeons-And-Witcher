@@ -53,6 +53,9 @@ TagManager:
   - name: Wall Decoration
     uniqueID: 3578129727
     locked: 0
+  - name: Obstacles
+    uniqueID: 3135090647
+    locked: 0
   - name: Player
     uniqueID: 3494338849
     locked: 0

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyBase : MonoBehaviour
 {
@@ -7,7 +8,8 @@ public class EnemyBase : MonoBehaviour
 
     public Rigidbody2D rb { get; private set; }
     public Animator animator { get; private set; }
-    public GameObject aliveGO { get; private set; }
+    public NavMeshAgent agent { get; private set; }
+    public Transform player { get; private set; }
 
     public int facingDirection { get; private set; }
 
@@ -15,11 +17,15 @@ public class EnemyBase : MonoBehaviour
 
     public virtual void Start()
     {
-        aliveGO = transform.Find("Alive").gameObject;
-        rb = aliveGO.GetComponent<Rigidbody2D>();
-        animator = aliveGO.GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
+        player = GameObject.FindWithTag("Player").transform;
 
         stateMachine = new EnemyStateMachine();
+        agent.updateUpAxis = false;
+        agent.updateRotation = false;
+        facingDirection = 1;
     }
 
     public virtual void Update()
@@ -37,9 +43,18 @@ public class EnemyBase : MonoBehaviour
         velocityWorkspace.Set(velocity * facingDirection, rb.velocity.y);
         rb.velocity = velocityWorkspace;
     }
+    public void CheckIfShouldFlip(Vector3 distance)
+    {
+        Vector2 direction = distance - transform.position;
+        int xInput = (int)(direction * Vector2.right).normalized.x;
+        if (xInput != 0 && xInput != facingDirection)
+        {
+            Flip();
+        }
+    }
     public virtual void Flip()
     {
         facingDirection *= -1;
-        aliveGO.transform.Rotate(0.0f, 180f, 0.0f);
+        transform.Rotate(0.0f, 180f, 0.0f);
     }
 }

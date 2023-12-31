@@ -6,8 +6,6 @@ public class EnemyIdleState : EnemyState
 
     protected float idleTime;
 
-
-    protected bool flipAfterIdle;
     protected bool isIdleTimeOver;
 
     public EnemyIdleState(EnemyBase enemyBase, EnemyStateMachine stateMachine, string animName, EnemyIdleStateData stateData) : base(enemyBase, stateMachine, animName)
@@ -31,10 +29,6 @@ public class EnemyIdleState : EnemyState
     public override void Exit()
     {
         base.Exit();
-        if (flipAfterIdle)
-        {
-            enemyBase.Flip();
-        }
     }
 
     public override void LogicUpdate()
@@ -50,10 +44,6 @@ public class EnemyIdleState : EnemyState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-    }
-    public void SetFlipAfterIdle(bool flip)
-    {
-        flipAfterIdle = flip;
     }
 
     private void SetRandomIdleTime()

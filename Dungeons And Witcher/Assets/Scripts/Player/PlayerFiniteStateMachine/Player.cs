@@ -46,7 +46,6 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log(stateMachine.currentState);
         stateMachine.currentState.LogicUpdate();
         // INVENTORY
         InventoryManager.Instance.mainInventory.SetActive(inputHandle.inventoryInput);
