@@ -16,6 +16,6 @@ public class PlayerData : ScriptableObject
     public float collectRadius = 1f;
     public LayerMask canCollectLayer;
 
-    [Header("Attack State")]
-    public Weapon[] weapon;
+    [Header("Stats")]
+    public int maxHp = 100;
 }

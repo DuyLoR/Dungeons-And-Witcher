@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9523778d1981f22478a763adc080dd5f, type: 3}
   m_Name: E1_BaseData
   m_EditorClassIdentifier: 
-  attackRange: 5
-  targetRange: 10
+  attackRange: 4
+  targetRange: 7
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64

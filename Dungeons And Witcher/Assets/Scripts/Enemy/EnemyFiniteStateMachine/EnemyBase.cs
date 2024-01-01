@@ -57,4 +57,12 @@ public class EnemyBase : MonoBehaviour
         facingDirection *= -1;
         transform.Rotate(0.0f, 180f, 0.0f);
     }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, enemyBaseData.targetRange);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, enemyBaseData.attackRange);
+        Gizmos.color = Color.cyan;
+    }
 }

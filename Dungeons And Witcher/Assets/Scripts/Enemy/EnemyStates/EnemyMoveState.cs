@@ -62,7 +62,7 @@ public class EnemyMoveState : EnemyState
         NavMeshTriangulation triangulation = NavMesh.CalculateTriangulation();
         int vertexIndex = Random.Range(0, triangulation.vertices.Length);
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(triangulation.vertices[vertexIndex], out hit, 2f, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(triangulation.vertices[vertexIndex], out hit, 2f, enemyBase.agent.areaMask))
         {
             return hit.position;
         }
