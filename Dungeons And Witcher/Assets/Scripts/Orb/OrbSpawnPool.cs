@@ -38,6 +38,8 @@ public class OrbSpawnPool : MonoBehaviour
         orbPrefabs.Add(orb);
         int i = GetOrbIndex(orb);
         availableObjects.Add(new Queue<GameObject>());
+        if (orb.GetComponent<Orb>() == null) orb.AddComponent<Orb>();
+        orb.GetComponent<Orb>().SetOrbData(orb.GetComponent<OrbItem>().orbData);
     }
     public GameObject GetFromPool(GameObject orb)
     {

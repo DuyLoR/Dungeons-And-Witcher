@@ -10,17 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b6e9570f5660ec43b07bc8eb1c0e374, type: 3}
-  m_Name: PurpeStaff
+  m_Name: BlueSraff
   m_EditorClassIdentifier: 
-  weaponPrefab: {fileID: 7637685876544118, guid: 654043c51835fd94989f582f2bd0cc26, type: 3}
-  WeaponName: "Tr\u01B0\u1EE3ng t\xEDm"
+  weaponPrefab: {fileID: 7637685876544118, guid: 6d9c5bbf649bf984fb77e729e6cb942d, type: 3}
+  WeaponName: 
   WeaponDescription: 
   castDelay: 0.1
-  rechargeTime: 0.5
+  rechargeTime: 0.2
   maxMana: 100
-  manaCharge: 10
-  capacity: 3
+  manaRegen: 10
+  capacity: 4
   orbDatas:
   - {fileID: 11400000, guid: 9328ee59c4419ab4096d5b8ac73f359d, type: 2}
-  - {fileID: 11400000, guid: efa17206faa396f408c792a1821fb378, type: 2}
   - {fileID: 11400000, guid: e7de1c79eb62b7f41b162fd3131f8043, type: 2}

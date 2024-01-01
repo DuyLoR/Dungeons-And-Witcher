@@ -12,7 +12,7 @@ public class WeaponData : ScriptableObject
     public float castDelay = .1f;
     public float rechargeTime = .2f;
     public int maxMana = 100;
-    public int manaCharge = 10;
+    public int manaRegen = 10;
     public int capacity = 3;
     public OrbData[] orbDatas;
 

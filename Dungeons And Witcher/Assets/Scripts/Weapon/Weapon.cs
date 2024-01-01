@@ -11,13 +11,13 @@ public class Weapon : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Transform orbSpawnPoint;
 
-    private int currentWeaponOrbIndex = 0;
+    private int currentWeaponMana;
+    private int currentWeaponOrbIndex;
     private int facingDirection;
     private float startTime;
-    private float timeDelay = 0.2f;
+    private float manaRegenTimer = 0;
 
     private bool isAttack;
-
     private void Awake()
     {
         facingDirection = 1;
@@ -30,14 +30,32 @@ public class Weapon : MonoBehaviour
         {
             SetWeaponData(InventoryManager.Instance.GetSeletedWeapon());
         }
-        if (isAttack && Time.time >= startTime + timeDelay)
+        if (weaponData != null && weaponData.orbDatas.Length >= 0)
         {
-            startTime = Time.time;
-            if (weaponData != null)
+            manaRegenTimer += Time.deltaTime;
+            if (manaRegenTimer >= 1)
             {
-                AddNewOrbInPool(weaponData.orbDatas);
-                FireOrb();
+                manaRegenTimer = 0f;
+
+                if (currentWeaponMana < weaponData.maxMana)
+                {
+                    currentWeaponMana += weaponData.manaRegen;
+
+                    currentWeaponMana = Mathf.Min(currentWeaponMana, weaponData.maxMana);
+                }
             }
+
+            float timeRecharge = currentWeaponOrbIndex == weaponData.orbDatas.Length - 1 ? weaponData.rechargeTime : 0;
+            if (Time.time >= startTime + weaponData.castDelay + weaponData.orbDatas[currentWeaponOrbIndex].castDelay + timeRecharge && isAttack)
+            {
+                startTime = Time.time;
+                if (currentWeaponMana >= 0 && weaponData.orbDatas[currentWeaponOrbIndex].manaUse <= currentWeaponMana)
+                {
+                    AddNewOrbInPool(weaponData.orbDatas[currentWeaponOrbIndex]);
+                    FireOrb();
+                }
+            }
+
         }
     }
 
@@ -59,6 +77,8 @@ public class Weapon : MonoBehaviour
         currentWeapon.GetComponent<WeaponItem>().InitalizeWeaponData(weaponData);
         spriteRenderer = currentWeapon.GetComponentInChildren<SpriteRenderer>();
         orbSpawnPoint = currentWeapon.transform.Find("OrbSpawnPoint").transform;
+        currentWeaponOrbIndex = 0;
+        currentWeaponMana = weaponData.maxMana;
     }
     public void SetWeaponData(WeaponData newWeaponData)
     {
@@ -106,23 +126,19 @@ public class Weapon : MonoBehaviour
         facingDirection *= -1;
         spriteRenderer.flipX = facingDirection == -1 ? true : false;
     }
-    private void AddNewOrbInPool(OrbData[] newOrbDatas)
+    private void AddNewOrbInPool(OrbData newOrbData)
     {
-        if (newOrbDatas.Length == 0) { return; }
-        for (int i = 0; i < newOrbDatas.Length; i++)
+        if (!OrbSpawnPool.Instance.CheckIfOrbInPool(newOrbData.orbPrefab))
         {
-            if (!OrbSpawnPool.Instance.CheckIfOrbInPool(newOrbDatas[i].orbPrefab))
-            {
-                OrbSpawnPool.Instance.AddOrbToOrbPrefabs(newOrbDatas[i].orbPrefab);
-            }
+            OrbSpawnPool.Instance.AddOrbToOrbPrefabs(newOrbData.orbPrefab);
         }
     }
     private void FireOrb()
     {
-        if (weaponData.orbDatas.Length == 0) return;
-        currentWeaponOrb = weaponData.orbDatas[0].orbPrefab;
-        var orb = OrbSpawnPool.Instance.GetFromPool(currentWeaponOrb)?.AddComponent<Orb>();
-        ChangeDataCurrentOrb(orb);
+        currentWeaponOrb = weaponData.orbDatas[currentWeaponOrbIndex].orbPrefab;
+        Orb currentOrb = OrbSpawnPool.Instance.GetFromPool(currentWeaponOrb).GetComponent<Orb>();
+        ChangeDataCurrentOrb(currentOrb);
+        currentWeaponMana -= currentOrb.orbData.manaUse;
         currentWeaponOrbIndex = (currentWeaponOrbIndex + 1) % weaponData.orbDatas.Length;
         currentWeaponOrb = weaponData.orbDatas[currentWeaponOrbIndex].orbPrefab;
     }

@@ -11,27 +11,35 @@ public class Orb : MonoBehaviour
 
     private Vector2 startingPos;
     private bool isActive;
+    private float orbActiveTimer = 0;
 
     private void OnEnable()
     {
         rb = GetComponent<Rigidbody2D>();
-        isActive = true;
     }
 
     private void Update()
     {
-        if (isActive)
+        orbActiveTimer += Time.deltaTime;
+        if (orbActiveTimer >= orbData.timeActive)
         {
-            startingPos = transform.position;
-            isActive = false;
-        }
-        if (Vector2.Distance(startingPos, rb.position) >= maxDistance)
-        {
+            orbActiveTimer = 0;
             OrbSpawnPool.Instance.AddToPool(gameObject);
         }
     }
     public void SetVelocity(Vector2 velocity)
     {
-        rb.velocity = (velocity).normalized * 30f;
+        rb.velocity = (velocity).normalized * orbData.orbSpeed;
+    }
+    public void SetOrbData(OrbData orbData)
+    {
+        this.orbData = orbData;
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy"))
+        {
+            OrbSpawnPool.Instance.AddToPool(gameObject);
+        }
     }
 }

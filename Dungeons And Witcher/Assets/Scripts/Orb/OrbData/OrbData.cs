@@ -12,7 +12,7 @@ public class OrbData : ScriptableObject
     public int damage = 5;
     public int orbSpeed = 250;
     public float castDelay = .1f;
-    public float timeDestroy = 2f;
+    public float timeActive = 2f;
 
 
     public enum orbType
