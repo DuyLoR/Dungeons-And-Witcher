@@ -15,6 +15,7 @@ public class EnemyBase : MonoBehaviour
 
     private Vector2 velocityWorkspace;
 
+
     public virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();

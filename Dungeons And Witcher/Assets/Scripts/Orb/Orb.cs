@@ -37,9 +37,10 @@ public class Orb : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        IDamageable damageable = collision.GetComponent<IDamageable>();
+        if (damageable != null)
         {
-            OrbSpawnPool.Instance.AddToPool(gameObject);
+            damageable.Damege(orbData.damage);
         }
     }
 }

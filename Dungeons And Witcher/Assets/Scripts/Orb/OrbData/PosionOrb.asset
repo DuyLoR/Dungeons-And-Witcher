@@ -17,7 +17,7 @@ MonoBehaviour:
   orbDescription: 
   type: 0
   manaUse: 5
-  damage: 10
+  damage: 5
   orbSpeed: 10
   castDelay: 0.1
   timeActive: 2

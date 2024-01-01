@@ -16,8 +16,8 @@ MonoBehaviour:
   orbName: "Ng\u1ECDc \u0110\u1ECF"
   orbDescription: 
   type: 0
-  manaUse: 20
-  damage: 3
+  manaUse: 5
+  damage: 10
   orbSpeed: 15
   castDelay: 0.1
   timeActive: 0.5
