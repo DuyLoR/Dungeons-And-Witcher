@@ -44,9 +44,9 @@ public class EnemyBase : MonoBehaviour
         velocityWorkspace.Set(velocity * facingDirection, rb.velocity.y);
         rb.velocity = velocityWorkspace;
     }
-    public void CheckIfShouldFlip(Vector3 distance)
+    public void CheckIfShouldFlip(Vector2 distance)
     {
-        Vector2 direction = distance - transform.position;
+        Vector2 direction = distance - (Vector2)transform.position;
         int xInput = (int)(direction * Vector2.right).normalized.x;
         if (xInput != 0 && xInput != facingDirection)
         {

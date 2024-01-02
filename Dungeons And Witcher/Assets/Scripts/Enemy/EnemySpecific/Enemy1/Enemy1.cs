@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class Enemy1 : EnemyBase, IDamageable
@@ -38,6 +39,10 @@ public class Enemy1 : EnemyBase, IDamageable
     {
         currentHeal -= amount;
         stateMachine.ChangeState(takendameState);
+        GameObject popUp = Instantiate(enemyBaseData.popupPrefabs, transform.position, Quaternion.identity, transform);
+        TextMeshPro txt = popUp.GetComponent<TextMeshPro>();
+        txt.text = amount.ToString();
+
         if (currentHeal <= 0)
         {
             stateMachine.ChangeState(deadState);

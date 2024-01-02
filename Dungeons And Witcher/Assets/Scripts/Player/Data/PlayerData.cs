@@ -3,6 +3,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "newPlayerData", menuName = "Data/Player Data/Base Data")]
 public class PlayerData : ScriptableObject
 {
+    [Header("Prefabs")]
+    public GameObject popupPrefabs;
+
     [Header("Move State")]
     public float movementVelocity = 4f;
 

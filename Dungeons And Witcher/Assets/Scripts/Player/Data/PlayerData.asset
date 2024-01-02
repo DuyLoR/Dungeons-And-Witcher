@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6823a01eb778a774e9587a9e6be3bdbf, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
+  popupPrefabs: {fileID: 4220000123271354280, guid: 43951468ab4e33c47bae4903a32bc0c8, type: 3}
   movementVelocity: 10
   dashCooldown: 1
   dashVelocity: 20
@@ -20,4 +21,4 @@ MonoBehaviour:
   canCollectLayer:
     serializedVersion: 2
     m_Bits: 128
-  weapon: []
+  maxHp: 100
