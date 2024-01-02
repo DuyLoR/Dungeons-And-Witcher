@@ -24,6 +24,7 @@ public class EnemyMoveState : EnemyState
     {
         base.Enter();
 
+        enemyBase.agent.isStopped = false;
         enemyBase.agent.speed = stateData.movementSpeed;
         randomRoaningPos = GetRoaningPos();
         enemyBase.agent.SetDestination(randomRoaningPos);

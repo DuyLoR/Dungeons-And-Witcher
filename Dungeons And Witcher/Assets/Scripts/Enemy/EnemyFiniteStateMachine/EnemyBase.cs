@@ -14,7 +14,7 @@ public class EnemyBase : MonoBehaviour
     public int facingDirection { get; private set; }
 
     private Vector2 velocityWorkspace;
-
+    private bool isDamageToPlayer;
 
     public virtual void Start()
     {
@@ -26,6 +26,8 @@ public class EnemyBase : MonoBehaviour
         stateMachine = new EnemyStateMachine();
         agent.updateUpAxis = false;
         agent.updateRotation = false;
+
+        isDamageToPlayer = false;
         facingDirection = 1;
     }
 
@@ -58,6 +60,31 @@ public class EnemyBase : MonoBehaviour
         facingDirection *= -1;
         transform.Rotate(0.0f, 180f, 0.0f);
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        IDamageable damageable = collision.GetComponent<IDamageable>();
+        if (damageable != null && !isDamageToPlayer)
+        {
+            isDamageToPlayer = true;
+            damageable.Damage(enemyBaseData.damage);
+        }
+
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        IDamageable damageable = collision.GetComponent<IDamageable>();
+        if (damageable != null)
+        {
+            isDamageToPlayer = false;
+        }
+    }
+
+    public void DestroyGameObject()
+    {
+        //TODO: Spawn item after destroy
+        Destroy(gameObject);
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

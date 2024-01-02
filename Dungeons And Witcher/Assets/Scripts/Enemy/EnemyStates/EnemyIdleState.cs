@@ -21,7 +21,7 @@ public class EnemyIdleState : EnemyState
     public override void Enter()
     {
         base.Enter();
-        enemyBase.SetVelocity(0f);
+        enemyBase.agent.isStopped = true;
         isIdleTimeOver = false;
         SetRandomIdleTime();
     }

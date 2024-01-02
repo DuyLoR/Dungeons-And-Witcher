@@ -24,12 +24,6 @@ public class PlayerState
         this.playerData = playerData;
         this.animName = animName;
     }
-    public PlayerState(Player player, PlayerStateMachine stateMachine, PlayerData playerData)
-    {
-        this.player = player;
-        this.stateMachine = stateMachine;
-        this.playerData = playerData;
-    }
 
     public virtual void Enter()
     {

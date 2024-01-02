@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class E1_DeadState : EnemyDeadState
 {
     private Enemy1 enemy;
@@ -24,6 +26,11 @@ public class E1_DeadState : EnemyDeadState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        enemy.transform.position.Set(enemy.transform.position.x, enemy.transform.position.y - Time.deltaTime, enemy.transform.position.z);
+        if (isDeadtimeOver)
+        {
+            enemy.DestroyGameObject();
+        }
     }
 
     public override void PhysicsUpdate()

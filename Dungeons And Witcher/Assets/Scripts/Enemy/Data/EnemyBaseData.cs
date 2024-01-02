@@ -10,6 +10,6 @@ public class EnemyBaseData : ScriptableObject
     public float targetRange = 7f;
     [Header("Stats")]
     public int maxHeal = 100;
-    public int damege = 10;
+    public int damage = 10;
     public float attackDelay = .3f;
 }

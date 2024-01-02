@@ -2,14 +2,17 @@ using UnityEngine;
 
 public class PlayerDashState : PlayerState
 {
+
     public bool canDash { get; private set; }
 
     private float lastDashTime;
     private Vector2 dashDirection;
 
-    public PlayerDashState(Player player, PlayerStateMachine stateMachine, PlayerData playerData) : base(player, stateMachine, playerData)
+    public PlayerDashState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animName) : base(player, stateMachine, playerData, animName)
     {
+
     }
+
     public override void Enter()
     {
         base.Enter();

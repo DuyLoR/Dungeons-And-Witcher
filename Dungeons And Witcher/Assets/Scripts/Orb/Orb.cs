@@ -7,10 +7,7 @@ public class Orb : MonoBehaviour
 
     [SerializeField]
     public OrbData orbData;
-    private float maxDistance = 10f;
 
-    private Vector2 startingPos;
-    private bool isActive;
     private float orbActiveTimer = 0;
 
     private void OnEnable()
@@ -40,7 +37,7 @@ public class Orb : MonoBehaviour
         IDamageable damageable = collision.GetComponent<IDamageable>();
         if (damageable != null)
         {
-            damageable.Damege(orbData.damage);
+            damageable.Damage(orbData.damage);
         }
     }
 }

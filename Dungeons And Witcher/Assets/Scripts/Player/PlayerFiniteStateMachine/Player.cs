@@ -1,13 +1,17 @@
+using TMPro;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
     public PlayerStateMachine stateMachine { get; private set; }
     public PlayerIdleState idleState { get; private set; }
     public PlayerMoveState moveState { get; private set; }
     public PlayerDashState dashState { get; private set; }
-    public PlayerInputHandle inputHandle { get; private set; }
+    public PlayerTakendameState takendameState { get; private set; }
+    public PlayerDeadState deadState { get; private set; }
+
     public Weapon weapon { get; private set; }
+    public PlayerInputHandle inputHandle { get; private set; }
     public PlayerCollector playerCollector { get; private set; }
 
     public Animator animator { get; private set; }
@@ -19,6 +23,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     public PlayerData playerData;
     private Vector2 workspace;
+    private int currentHeal;
 
     private bool weaponHasBeenSet = false;
 
@@ -26,9 +31,11 @@ public class Player : MonoBehaviour
     {
         stateMachine = new PlayerStateMachine();
 
-        idleState = new PlayerIdleState(this, stateMachine, playerData, "Idle");
-        moveState = new PlayerMoveState(this, stateMachine, playerData, "Move");
-        dashState = new PlayerDashState(this, stateMachine, playerData);
+        idleState = new PlayerIdleState(this, stateMachine, playerData, "idle");
+        moveState = new PlayerMoveState(this, stateMachine, playerData, "move");
+        dashState = new PlayerDashState(this, stateMachine, playerData, "move");
+        takendameState = new PlayerTakendameState(this, stateMachine, playerData, "takendame");
+        deadState = new PlayerDeadState(this, stateMachine, playerData, "dead");
     }
     private void Start()
     {
@@ -42,6 +49,7 @@ public class Player : MonoBehaviour
 
         stateMachine.Initialize(idleState);
         playerCollector.Initialize(this);
+        currentHeal = playerData.maxHp;
         facingDirection = 1;
     }
     private void Update()
@@ -104,5 +112,23 @@ public class Player : MonoBehaviour
     {
         Vector3 newPos = new Vector3(weapon.transform.localPosition.x, stateMachine.currentState == idleState ? 0.85f : 1.1f, 0f);
         weapon.ChangePosition(newPos);
+    }
+
+    public void Damage(int amount)
+    {
+        currentHeal -= amount;
+        stateMachine.ChangeState(takendameState);
+        GameObject popUp = Instantiate(playerData.popupPrefabs, transform.position, Quaternion.identity, transform);
+        TextMeshPro txt = popUp.GetComponent<TextMeshPro>();
+        txt.text = amount.ToString();
+        if (currentHeal <= 0)
+        {
+            stateMachine.ChangeState(deadState);
+        }
+    }
+    public void DestroyGameObject()
+    {
+        //TODO: Spawn item after destroy
+        gameObject.SetActive(false);
     }
 }

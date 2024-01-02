@@ -35,7 +35,7 @@ public class Enemy1 : EnemyBase, IDamageable
         stateMachine.Initialize(moveState);
         currentHeal = enemyBaseData.maxHeal;
     }
-    public void Damege(int amount)
+    public void Damage(int amount)
     {
         currentHeal -= amount;
         stateMachine.ChangeState(takendameState);

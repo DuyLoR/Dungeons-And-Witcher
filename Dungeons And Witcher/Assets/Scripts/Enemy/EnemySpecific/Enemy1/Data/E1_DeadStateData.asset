@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 954be2a1913a28048a262e46d27db309, type: 3}
   m_Name: E1_DeadStateData
   m_EditorClassIdentifier: 
+  deadTime: 3
