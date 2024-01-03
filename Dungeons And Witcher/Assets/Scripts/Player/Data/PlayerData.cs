@@ -14,6 +14,8 @@ public class PlayerData : ScriptableObject
     public float dashVelocity = 20f;
     public float dashTime = 0.4f;
 
+    [Header("Takendame State")]
+    public float takendameDelay = 1f;
 
     [Header("Collect")]
     public float collectRadius = 1f;

@@ -23,9 +23,13 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField]
     public PlayerData playerData;
     private Vector2 workspace;
+
+    private float takendameTimer;
+
     private int currentHeal;
 
     private bool weaponHasBeenSet = false;
+    private bool isTakendameOver;
 
     public void Awake()
     {
@@ -50,11 +54,17 @@ public class Player : MonoBehaviour, IDamageable
         stateMachine.Initialize(idleState);
         playerCollector.Initialize(this);
         currentHeal = playerData.maxHp;
+        takendameTimer = Time.time;
         facingDirection = 1;
     }
     private void Update()
     {
         stateMachine.currentState.LogicUpdate();
+        if (Time.time >= takendameTimer + playerData.takendameDelay)
+        {
+            isTakendameOver = true;
+        }
+
         // INVENTORY
         InventoryManager.Instance.mainInventory.SetActive(inputHandle.inventoryInput);
         InventoryManager.Instance.orbInventory.SetActive(inputHandle.inventoryInput);
@@ -116,11 +126,18 @@ public class Player : MonoBehaviour, IDamageable
 
     public void Damage(int amount)
     {
-        currentHeal -= amount;
+        if (!isTakendameOver) return;
+
         stateMachine.ChangeState(takendameState);
+
         GameObject popUp = Instantiate(playerData.popupPrefabs, transform.position, Quaternion.identity, transform);
         TextMeshPro txt = popUp.GetComponent<TextMeshPro>();
         txt.text = amount.ToString();
+
+        currentHeal -= amount;
+        takendameTimer = Time.time;
+        isTakendameOver = false;
+
         if (currentHeal <= 0)
         {
             stateMachine.ChangeState(deadState);

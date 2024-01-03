@@ -24,7 +24,9 @@ public class PlayerTakendameState : PlayerState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (Time.time >= startTime + player.animator.GetCurrentAnimatorStateInfo(0).length)
+        player.SetVelocity(playerData.movementVelocity * input);
+        player.CheckIfShouldFlip(mousePos);
+        if (Time.time >= startTime + player.playerData.takendameDelay)
         {
             stateMachine.ChangeState(player.idleState);
         }
