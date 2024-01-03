@@ -60,10 +60,10 @@ public class EnemyMoveState : EnemyState
     }
     public Vector3 GetRoaningPos()
     {
-        NavMeshTriangulation triangulation = NavMesh.CalculateTriangulation();
+        NavMeshTriangulation triangulation = UnityEngine.AI.NavMesh.CalculateTriangulation();
         int vertexIndex = Random.Range(0, triangulation.vertices.Length);
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(triangulation.vertices[vertexIndex], out hit, 2f, enemyBase.agent.areaMask))
+        if (UnityEngine.AI.NavMesh.SamplePosition(triangulation.vertices[vertexIndex], out hit, 2f, enemyBase.agent.areaMask))
         {
             return hit.position;
         }
