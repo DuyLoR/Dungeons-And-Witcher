@@ -45,11 +45,11 @@ TagManager:
   - name: Background
     uniqueID: 3711427513
     locked: 0
-  - name: Floors
-    uniqueID: 1419849041
-    locked: 0
   - name: Walls
     uniqueID: 2420473919
+    locked: 0
+  - name: Floors
+    uniqueID: 1419849041
     locked: 0
   - name: Wall Decoration
     uniqueID: 3578129727

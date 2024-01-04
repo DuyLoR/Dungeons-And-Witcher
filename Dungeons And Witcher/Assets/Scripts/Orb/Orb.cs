@@ -35,7 +35,7 @@ public class Orb : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         IDamageable damageable = collision.GetComponent<IDamageable>();
-        if (damageable != null)
+        if (damageable != null && collision.GetComponent<Player>() == null)
         {
             damageable.Damage(orbData.damage);
         }

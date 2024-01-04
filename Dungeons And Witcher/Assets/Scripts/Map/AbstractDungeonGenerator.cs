@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class DungeonGenerator : MonoBehaviour
+public abstract class AbstractDungeonGenerator : MonoBehaviour
 {
     [SerializeField] protected TilemapVisualizer tilemapVisualizer = null;
     [SerializeField] protected Vector2Int startPosition = Vector2Int.zero;
@@ -9,6 +9,7 @@ public abstract class DungeonGenerator : MonoBehaviour
     {
         tilemapVisualizer.Clear();
         RunProceduralGeneration();
+        NavMesh.instance.UpdateNavMesh();
     }
 
     protected abstract void RunProceduralGeneration();
