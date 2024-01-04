@@ -18,7 +18,6 @@ public class EnemyBase : MonoBehaviour
 
     public virtual void Start()
     {
-        NavMesh.instance.UpdateNavMesh();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();

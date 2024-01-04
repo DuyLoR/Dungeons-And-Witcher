@@ -11,6 +11,9 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
 
     [SerializeField]
     private int corriderSize = 3;
+
+    private Dictionary<Vector2Int, HashSet<Vector2Int>> roomsDictionary = new Dictionary<Vector2Int, HashSet<Vector2Int>>();
+    private HashSet<Vector2Int> floorPositions, corridorPositions;
     private void Start()
     {
         GenerateDungeon();
@@ -73,6 +76,7 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
         foreach (var roomPosition in roomsToCreate)
         {
             var roomFloor = RunRandomWalk(randomWalkParameters, roomPosition);
+            SaveRoomData(roomPosition, roomFloor);
             roomPositions.UnionWith(roomFloor);
         }
         return roomPositions;
@@ -92,6 +96,15 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
             potentialRoomPositions.Add(currentPosition);
             floorPositions.UnionWith(corridor);
         }
+        corridorPositions = new HashSet<Vector2Int>(floorPositions);
         return corridors;
+    }
+    private void ClearRoomData()
+    {
+        roomsDictionary.Clear();
+    }
+    private void SaveRoomData(Vector2Int roomPosition, HashSet<Vector2Int> roomFloor)
+    {
+        roomsDictionary[roomPosition] = roomFloor;
     }
 }

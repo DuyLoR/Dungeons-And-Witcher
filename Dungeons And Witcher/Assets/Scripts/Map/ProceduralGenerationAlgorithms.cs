@@ -45,7 +45,7 @@ public static class Direction2D
     /// <summary> 
     ///danh sach cac huong chinh<cardinaldirections>
     /// </summary>
-    public static List<Vector2Int> cardinalDirectionsList = new List<Vector2Int>
+    public static List<Vector2Int> cardinal4DirectionsList = new List<Vector2Int>
     {
         new Vector2Int(0, 1),   //UP
         new Vector2Int(1, 0),   //RIGHT
@@ -67,7 +67,7 @@ public static class Direction2D
 
     public static Vector2Int GetRandomCardinal4Direction()
     {
-        return cardinalDirectionsList[Random.Range(0, cardinalDirectionsList.Count)];
+        return cardinal4DirectionsList[Random.Range(0, cardinal4DirectionsList.Count)];
     }
     public static Vector2Int GetRandomCardinal8Direction()
     {
