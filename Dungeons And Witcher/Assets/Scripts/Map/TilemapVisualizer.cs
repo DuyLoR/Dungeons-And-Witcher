@@ -4,32 +4,35 @@ using UnityEngine.Tilemaps;
 
 public class TilemapVisualizer : MonoBehaviour
 {
-    [SerializeField] private Tilemap floorTilemap, wallTilemap;
-    [SerializeField] private TileBase ruleFloorTile, ruleWallTile;
+    [SerializeField] private Tilemap floorTilemap, wallTilemap, pathTileMap;
+    [SerializeField] private TileBase ruleFloorTile, ruleWallTile, rulepathTile;
 
     public void PaintFloorTiles(IEnumerable<Vector2Int> floorPositions)
     {
         PaintTiles(floorPositions, floorTilemap, ruleFloorTile);
     }
-
-    private void PaintTiles(IEnumerable<Vector2Int> floorPositions, Tilemap floorTilemap, TileBase floorTile)
+    public void PaintPathTiles(IEnumerable<Vector2Int> pathPositions)
     {
-        foreach (var position in floorPositions)
+        PaintTiles(pathPositions, pathTileMap, rulepathTile);
+    }
+    public void PaintWallTiles(IEnumerable<Vector2Int> wallPositions)
+    {
+        PaintTiles(wallPositions, wallTilemap, ruleWallTile);
+    }
+
+    private void PaintTiles(IEnumerable<Vector2Int> positions, Tilemap tilemap, TileBase tile)
+    {
+        foreach (var position in positions)
         {
-            PaintSingleTile(floorTilemap, floorTile, position);
+            PaintSingleTile(tilemap, tile, position);
         }
     }
-
-    private void PaintSingleTile(Tilemap floorTilemap, TileBase floorTile, Vector2Int position)
+    private void PaintSingleTile(Tilemap positions, TileBase tile, Vector2Int position)
     {
-        var tilePosition = floorTilemap.WorldToCell((Vector3Int)position);
-        floorTilemap.SetTile(tilePosition, floorTile);
+        var tilePosition = positions.WorldToCell((Vector3Int)position);
+        positions.SetTile(tilePosition, tile);
     }
 
-    internal void PaintSingleBasicWall(Vector2Int position)
-    {
-        PaintSingleTile(wallTilemap, ruleWallTile, position);
-    }
     public void Clear()
     {
         floorTilemap.ClearAllTiles();

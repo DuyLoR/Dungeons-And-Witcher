@@ -6,32 +6,28 @@ public static class WallGenerator
     /// <summary>
     /// Create walls with positions and tilemap, and what is wall type
     /// </summary>
-    /// <param name="floorPositions"></param>
+    /// <param name="Posotions"></param>
     /// <param name="tilemapVisualizer"></param>
-    public static void CreateWalls(HashSet<Vector2Int> floorPositions, TilemapVisualizer tilemapVisualizer)
+    public static void CreateWalls(HashSet<Vector2Int> Posotions, TilemapVisualizer tilemapVisualizer)
     {
-        var basicWallPositions = FindWallsInDirections(floorPositions, Direction2D.cardinal8DirectionsList);
-        foreach (var position in basicWallPositions)
-        {
-            tilemapVisualizer.PaintSingleBasicWall(position);
-        }
+        var basicWallPositions = FindWallsInDirections(Posotions, Direction2D.cardinal8DirectionsList);
+        tilemapVisualizer.PaintWallTiles(basicWallPositions);
     }
-
     /// <summary>
     /// This function return HashSet<Vector2Int> contains position what is had 1 neighbourPosition not inside floorPosition <4 derection>
     /// </summary>
-    /// <param name="floorPositions"></param>
+    /// <param name="Positions"></param>
     /// <param name="cardinalDirectionsList"></param>
     /// <returns></returns>
-    private static HashSet<Vector2Int> FindWallsInDirections(HashSet<Vector2Int> floorPositions, List<Vector2Int> cardinalDirectionsList)
+    public static HashSet<Vector2Int> FindWallsInDirections(HashSet<Vector2Int> Positions, List<Vector2Int> cardinalDirectionsList)
     {
         HashSet<Vector2Int> wallPositions = new HashSet<Vector2Int>();
-        foreach (var position in floorPositions)
+        foreach (var position in Positions)
         {
             foreach (var direction in cardinalDirectionsList)
             {
                 var neighbourPosition = position + direction;
-                if (floorPositions.Contains(neighbourPosition) == false)
+                if (Positions.Contains(neighbourPosition) == false)
                 {
                     wallPositions.Add(position);
                 }

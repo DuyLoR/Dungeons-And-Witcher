@@ -978,6 +978,56 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
+--- !u!1 &879497739
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 879497741}
+  - component: {fileID: 879497740}
+  m_Layer: 0
+  m_Name: Generate2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &879497740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879497739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 895aaf64e0a74bb40bdd82c846caa160, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemapVisualizer: {fileID: 1589341333}
+  startPosition: {x: 0, y: 0}
+  randomWalkParameters: {fileID: 11400000, guid: f9cdfbf4329e6f54790e4e86c164d662, type: 2}
+  corridorLength: 30
+  corridorCount: 5
+  corriderSize: 2
+--- !u!4 &879497741
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879497739}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.1612592, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1006854448
 GameObject:
   m_ObjectHideFlags: 0
@@ -1395,8 +1445,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floorTilemap: {fileID: 747459553}
   wallTilemap: {fileID: 855334798}
+  pathTileMap: {fileID: 747459553}
   ruleFloorTile: {fileID: 11400000, guid: deaa1ab6445187e489b3a43bb84f292f, type: 2}
   ruleWallTile: {fileID: 11400000, guid: 813d42bd148b2ba45b00193ab25f9b70, type: 2}
+  rulepathTile: {fileID: 11400000, guid: 67d60d5b17c58734fb415746ff957401, type: 2}
 --- !u!4 &1589341334
 Transform:
   m_ObjectHideFlags: 0

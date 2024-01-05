@@ -65,8 +65,11 @@ public class EnemyBase : MonoBehaviour
         IDamageable damageable = collision.GetComponent<IDamageable>();
         if (damageable != null && !isDamageToPlayer)
         {
-            isDamageToPlayer = true;
-            damageable.Damage(enemyBaseData.damage);
+            if (collision.CompareTag("Player"))
+            {
+                isDamageToPlayer = true;
+                damageable.Damage(enemyBaseData.damage);
+            }
         }
 
     }
@@ -75,7 +78,10 @@ public class EnemyBase : MonoBehaviour
         IDamageable damageable = collision.GetComponent<IDamageable>();
         if (damageable != null)
         {
-            isDamageToPlayer = false;
+            if (collision.CompareTag("Player"))
+            {
+                isDamageToPlayer = false;
+            }
         }
     }
 

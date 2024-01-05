@@ -12,8 +12,13 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
     [SerializeField]
     private int corriderSize = 3;
 
-    private Dictionary<Vector2Int, HashSet<Vector2Int>> roomsDictionary = new Dictionary<Vector2Int, HashSet<Vector2Int>>();
-    private HashSet<Vector2Int> floorPositions, corridorPositions;
+    private DungeonData dungeonData;
+    private void Awake()
+    {
+        dungeonData = FindObjectOfType<DungeonData>();
+        if (dungeonData == null)
+            dungeonData = gameObject.AddComponent<DungeonData>();
+    }
     private void Start()
     {
         GenerateDungeon();
@@ -21,41 +26,31 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
 
     protected override void RunProceduralGeneration()
     {
+        dungeonData.Reset();
         CoorridorFirstGeneration();
     }
 
     private void CoorridorFirstGeneration()
     {
-        HashSet<Vector2Int> floorPositions = new HashSet<Vector2Int>();
+        tilemapVisualizer.Clear();
+
         HashSet<Vector2Int> potentialRoomPositions = new HashSet<Vector2Int>();
 
-        List<List<Vector2Int>> corridors = CreateCorridors(floorPositions, potentialRoomPositions);
-        HashSet<Vector2Int> roomPositions = CreateRooms(potentialRoomPositions);
-
-        floorPositions.UnionWith(roomPositions);
-
-        for (int i = 0; i < corridors.Count; i++)
-        {
-            corridors[i] = IncreaseCorridorSize(corridors[i]);
-            floorPositions.UnionWith(corridors[i]);
-
-        }
-        tilemapVisualizer.Clear();
-        tilemapVisualizer.PaintFloorTiles(floorPositions);
-        WallGenerator.CreateWalls(floorPositions, tilemapVisualizer);
+        CreateCorridors(potentialRoomPositions);
+        CreateRooms(potentialRoomPositions);
+        CreateWalls();
     }
 
-    private List<Vector2Int> IncreaseCorridorSize(List<Vector2Int> corridor)
+    private HashSet<Vector2Int> IncreaseCorridorSize(HashSet<Vector2Int> corridor)
     {
-        List<Vector2Int> newCorridor = new List<Vector2Int>();
-        for (int i = 0; i < corridor.Count - 1; i++)
+        HashSet<Vector2Int> newCorridor = new HashSet<Vector2Int>();
+        foreach (var positon in corridor)
         {
-            //handle corner
             for (int x = -corriderSize; x < corriderSize; x++)
             {
                 for (int y = -corriderSize; y < corriderSize; y++)
                 {
-                    newCorridor.Add(corridor[i] + new Vector2Int(x, y));
+                    newCorridor.Add(positon + new Vector2Int(x, y));
                 }
             }
         }
@@ -67,44 +62,55 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
     /// </summary>
     /// <param name="potentialRoomPositions"></param>
     /// <returns></returns>
-    private HashSet<Vector2Int> CreateRooms(HashSet<Vector2Int> potentialRoomPositions)
+    private void CreateRooms(HashSet<Vector2Int> potentialRoomPositions)
     {
-        HashSet<Vector2Int> roomPositions = new HashSet<Vector2Int>();
-        //orderby nếu không khai báo thì nó sẽ là ngẫu nhiên
         List<Vector2Int> roomsToCreate = potentialRoomPositions.OrderBy(x => Guid.NewGuid()).Take(potentialRoomPositions.Count).ToList();
-
         foreach (var roomPosition in roomsToCreate)
         {
             var roomFloor = RunRandomWalk(randomWalkParameters, roomPosition);
-            SaveRoomData(roomPosition, roomFloor);
-            roomPositions.UnionWith(roomFloor);
+            dungeonData.Rooms.Add(new Room(roomPosition, roomFloor));
+            tilemapVisualizer.PaintFloorTiles(roomFloor);
         }
-        return roomPositions;
     }
 
-    private List<List<Vector2Int>> CreateCorridors(HashSet<Vector2Int> floorPositions, HashSet<Vector2Int> potentialRoomPositions)
+    private void CreateCorridors(HashSet<Vector2Int> potentialRoomPositions)
     {
-        var currentPosition = startPosition;
-        potentialRoomPositions.Add(currentPosition);
-        List<List<Vector2Int>> corridors = new List<List<Vector2Int>>();
-
+        potentialRoomPositions.Add(startPosition);
         for (int i = 0; i < corridorCount; i++)
         {
-            var corridor = ProceduralGenerationAlgorithms.RandomWalkCorridor(currentPosition, corridorLength);
-            corridors.Add(corridor);
-            currentPosition = corridor[corridor.Count - 1];
-            potentialRoomPositions.Add(currentPosition);
-            floorPositions.UnionWith(corridor);
+            HashSet<Vector2Int> corridor = ProceduralGenerationAlgorithms.RandomWalkCorridor(potentialRoomPositions.LastOrDefault(), corridorLength);
+            dungeonData.Path.UnionWith(corridor);
+            potentialRoomPositions.Add(corridor.LastOrDefault());
         }
-        corridorPositions = new HashSet<Vector2Int>(floorPositions);
-        return corridors;
+        dungeonData.Path.UnionWith(IncreaseCorridorSize(dungeonData.Path));
+        tilemapVisualizer.PaintPathTiles(dungeonData.Path);
     }
-    private void ClearRoomData()
+    public void CreateWalls()
     {
-        roomsDictionary.Clear();
+        HashSet<Vector2Int> dungeonTiles = new HashSet<Vector2Int>();
+        foreach (var room in dungeonData.Rooms)
+        {
+            dungeonTiles.UnionWith(room.FloorTiles);
+        }
+        dungeonTiles.UnionWith(dungeonData.Path);
+        var wallPositions = FindWallsInDirections(dungeonTiles, Direction2D.cardinal8DirectionsList);
+        tilemapVisualizer.PaintWallTiles(wallPositions);
     }
-    private void SaveRoomData(Vector2Int roomPosition, HashSet<Vector2Int> roomFloor)
+    public HashSet<Vector2Int> FindWallsInDirections(HashSet<Vector2Int> Positions, List<Vector2Int> cardinalDirectionsList)
     {
-        roomsDictionary[roomPosition] = roomFloor;
+        HashSet<Vector2Int> wallPositions = new HashSet<Vector2Int>();
+        foreach (var position in Positions)
+        {
+            foreach (var direction in cardinalDirectionsList)
+            {
+                var neighbourPosition = position + direction;
+                if (Positions.Contains(neighbourPosition) == false)
+                {
+                    wallPositions.Add(neighbourPosition);
+                    continue;
+                }
+            }
+        }
+        return wallPositions;
     }
 }

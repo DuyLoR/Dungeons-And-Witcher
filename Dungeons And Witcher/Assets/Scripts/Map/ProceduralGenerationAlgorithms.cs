@@ -22,9 +22,9 @@ public static class ProceduralGenerationAlgorithms
         }
         return path;
     }
-    public static List<Vector2Int> RandomWalkCorridor(Vector2Int startPosition, int corridorLength)
+    public static HashSet<Vector2Int> RandomWalkCorridor(Vector2Int startPosition, int corridorLength)
     {
-        List<Vector2Int> corridor = new List<Vector2Int>();
+        HashSet<Vector2Int> corridor = new HashSet<Vector2Int>();
         var direction = Direction2D.GetRandomCardinal4Direction();
         var currentPosition = startPosition;
         corridor.Add(currentPosition);
