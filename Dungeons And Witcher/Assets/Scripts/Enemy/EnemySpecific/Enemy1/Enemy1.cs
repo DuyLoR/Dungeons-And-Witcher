@@ -25,6 +25,7 @@ public class Enemy1 : EnemyBase, IDamageable
     public override void Start()
     {
         base.Start();
+        Debug.Log(transform.position);
         idleState = new E1_IdleState(this, stateMachine, "idle", enemyIdleStateData, this);
         moveState = new E1_MoveState(this, stateMachine, "move", enemyMoveStateData, this);
         attackState = new E1_AttackState(this, stateMachine, "attack", enemyAttackStateData, this);

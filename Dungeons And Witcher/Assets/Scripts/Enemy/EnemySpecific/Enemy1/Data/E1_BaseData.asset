@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: E1_BaseData
   m_EditorClassIdentifier: 
   popupPrefabs: {fileID: 5481636594500660941, guid: 40f382199207ec2448a383fda7f80edb, type: 3}
-  attackRange: 4
-  targetRange: 6
+  attackRange: 6
+  targetRange: 10
   maxHeal: 100
   damage: 10
   attackDelay: 0.3

@@ -1,71 +1,64 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Cinemachine;
 
-public class AgentPlacer : MonoBehaviour
+public class EnemyPlacer : MonoBehaviour
 {
     [SerializeField]
-    private GameObject enemyPrefab, playerPrefab;
+    private List<GameObject> enemyPrefab;
 
-    [SerializeField]
-    private int playerRoomIndex;
-    [SerializeField]
-    private CinemachineVirtualCamera vCamera;
 
+    [Space(10)]
     [SerializeField]
-    private List<int> roomEnemiesCount;
+    private int minRoomEnemyCount = 5;
+    [SerializeField]
+    private int maxRoomEnemyCount = 10;
+    [SerializeField]
+    private Transform parent;
 
     DungeonData dungeonData;
 
     [SerializeField]
     private bool showGizmo = false;
 
+    private GameObject player;
+
     private void Awake()
     {
         dungeonData = FindObjectOfType<DungeonData>();
+        player = GameObject.FindWithTag("Player");
     }
 
     public void PlaceAgents()
     {
         if (dungeonData == null)
             return;
-
         //Loop for each room
         for (int i = 0; i < dungeonData.Rooms.Count; i++)
         {
-            //TO place eneies we need to analyze the room tiles to find those accesible from the path
-            Room room = dungeonData.Rooms[i];
-            RoomGraph roomGraph = new RoomGraph(room.FloorTiles);
+            if (dungeonData.Rooms[i].type == Room.roomType.start)
+                player.transform.position = dungeonData.Rooms[i].RoomCenterPos;
 
-            //Find the Path inside this specific room
-            HashSet<Vector2Int> roomFloor = new HashSet<Vector2Int>(room.FloorTiles);
-            //Find the tiles belonging to both the path and the room
-            roomFloor.IntersectWith(dungeonData.Path);
-
-            //Run the BFS to find all the tiles in the room accessible from the path
-            Dictionary<Vector2Int, Vector2Int> roomMap = roomGraph.RunBFS(roomFloor.First(), room.PropPositions);
-
-            //Positions that we can reach + path == positions where we can place enemies
-            room.PositionsAccessibleFromPath = roomMap.Keys.OrderBy(x => Guid.NewGuid()).ToList();
-
-            //did we add this room to the roomEnemiesCount list?
-            if(roomEnemiesCount.Count > i)
+            // Place enemies in all room types except 'start' and 'exit'
+            if (dungeonData.Rooms[i].type != Room.roomType.start && dungeonData.Rooms[i].type != Room.roomType.exit)
             {
-                PlaceEnemies(room, roomEnemiesCount[i]);
-            }
+                //TO place eneies we need to analyze the room tiles to find those accesible from the path
+                Room room = dungeonData.Rooms[i];
+                RoomGraph roomGraph = new RoomGraph(room.FloorTiles);
 
-            //Place the player
-            if(i==playerRoomIndex)
-            {
-                GameObject player = Instantiate(playerPrefab);
-                player.transform.localPosition = dungeonData.Rooms[i].RoomCenterPos + Vector2.one*0.5f;
-                //Make the camera follow the player
-                vCamera.Follow = player.transform;
-                vCamera.LookAt = player.transform;
-                dungeonData.PlayerReference = player;
+                //Find the Path inside this specific room
+                HashSet<Vector2Int> roomFloor = new HashSet<Vector2Int>(room.FloorTiles);
+                //Find the tiles belonging to both the path and the room
+                roomFloor.IntersectWith(dungeonData.Path);
+
+                //Run the BFS to find all the tiles in the room accessible from the path
+                Dictionary<Vector2Int, Vector2Int> roomMap = roomGraph.RunBFS(roomFloor.First(), room.PropPositions);
+
+                //Positions that we can reach + path == positions where we can place enemies
+                room.PositionsAccessibleFromPath = roomMap.Keys.OrderBy(x => Guid.NewGuid()).ToList();
+                //did we add this room to the roomEnemiesCount list?
+                PlaceEnemies(room, UnityEngine.Random.Range(minRoomEnemyCount, maxRoomEnemyCount));
             }
         }
     }
@@ -77,14 +70,16 @@ public class AgentPlacer : MonoBehaviour
     /// <param name="enemysCount"></param>
     private void PlaceEnemies(Room room, int enemysCount)
     {
-        for (int k = 0; k < enemysCount; k++)
+        for (int i = 0; i < enemysCount; i++)
         {
-            if (room.PositionsAccessibleFromPath.Count <= k)
+            if (room.PositionsAccessibleFromPath.Count <= i)
             {
                 return;
             }
-            GameObject enemy = Instantiate(enemyPrefab);
-            enemy.transform.localPosition = (Vector2)room.PositionsAccessibleFromPath[k] + Vector2.one*0.5f;
+            GameObject enemy = Instantiate(enemyPrefab[UnityEngine.Random.Range(0, enemyPrefab.Count - 1)]);
+            enemy.transform.SetParent(parent);
+            enemy.transform.localPosition = (Vector2)room.PositionsAccessibleFromPath[i] + Vector2.one * 0.5f;
+            enemy.GetComponent<EnemyBase>().SetRoom(room);
             room.EnemiesInTheRoom.Add(enemy);
         }
     }
@@ -109,14 +104,6 @@ public class AgentPlacer : MonoBehaviour
 
 public class RoomGraph
 {
-    public static List<Vector2Int> fourDirections = new()
-    {
-        Vector2Int.up,
-        Vector2Int.right,
-        Vector2Int.down,
-        Vector2Int.left
-    };
-
     Dictionary<Vector2Int, List<Vector2Int>> graph = new Dictionary<Vector2Int, List<Vector2Int>>();
 
     public RoomGraph(HashSet<Vector2Int> roomFloor)
@@ -124,7 +111,7 @@ public class RoomGraph
         foreach (Vector2Int pos in roomFloor)
         {
             List<Vector2Int> neighbours = new List<Vector2Int>();
-            foreach (Vector2Int direction in fourDirections)
+            foreach (Vector2Int direction in Direction2D.cardinal4DirectionsList)
             {
                 Vector2Int newPos = pos + direction;
                 if (roomFloor.Contains(newPos))
@@ -140,7 +127,7 @@ public class RoomGraph
     /// Creates a map of reachable tiles in our dungeon.
     /// </summary>
     /// <param name="startPos">Door position or tile position on the path between rooms inside this room</param>
-    /// <param name="occupiedNodes"></param>
+    /// <param name="occupiedNodes">This position has containt prop</param>
     /// <returns></returns>
     public Dictionary<Vector2Int, Vector2Int> RunBFS(Vector2Int startPos, HashSet<Vector2Int> occupiedNodes)
     {

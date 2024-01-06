@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
@@ -7,6 +5,7 @@ public class Prop : ScriptableObject
 {
     [Header("Prop data:")]
     public Sprite PropSprite;
+    public bool isTrigger = true;
     /// <summary>
     /// Affects the collider size of the prop
     /// </summary>
@@ -30,5 +29,5 @@ public class Prop : ScriptableObject
     public int GroupMinCount = 1;
     [Min(1)]
     public int GroupMaxCount = 1;
-    
+
 }

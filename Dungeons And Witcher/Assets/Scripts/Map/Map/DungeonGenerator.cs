@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
+public class DungeonGenerator : SimpleRandomWalkDungeonGenerator
 {
 
     [SerializeField]
@@ -13,6 +14,7 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
     private int corriderSize = 3;
 
     private DungeonData dungeonData;
+    public UnityEvent OnFinishedRoomGeneration;
     private void Awake()
     {
         dungeonData = FindObjectOfType<DungeonData>();
@@ -28,6 +30,7 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
     {
         dungeonData.Reset();
         CoorridorFirstGeneration();
+        OnFinishedRoomGeneration?.Invoke();
     }
 
     private void CoorridorFirstGeneration()

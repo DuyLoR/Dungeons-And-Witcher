@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4498399299758541511}
   m_Layer: 0
-  m_Name: PropPb
+  m_Name: PropPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

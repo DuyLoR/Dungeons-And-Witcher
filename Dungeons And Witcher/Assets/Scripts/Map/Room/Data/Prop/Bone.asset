@@ -10,18 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb8260e6d7659c742bf31c8b64bed040, type: 3}
-  m_Name: Candle
+  m_Name: Bone
   m_EditorClassIdentifier: 
-  PropSprite: {fileID: -113016921, guid: c8a2804d68a6c9c408102528cb2d74c2, type: 3}
+  PropSprite: {fileID: 805001903, guid: c8a2804d68a6c9c408102528cb2d74c2, type: 3}
+  isTrigger: 1
   PropSize: {x: 1, y: 1}
-  Corner: 1
-  NearWallUP: 0
-  NearWallDown: 0
-  NearWallRight: 0
-  NearWallLeft: 0
-  Inner: 0
-  PlacementQuantityMin: 5
-  PlacementQuantityMax: 10
+  Corner: 0
+  NearWallUP: 1
+  NearWallDown: 1
+  NearWallRight: 1
+  NearWallLeft: 1
+  Inner: 1
+  PlacementQuantityMin: 3
+  PlacementQuantityMax: 5
   PlaceAsGroup: 1
   GroupMinCount: 2
-  GroupMaxCount: 4
+  GroupMaxCount: 3

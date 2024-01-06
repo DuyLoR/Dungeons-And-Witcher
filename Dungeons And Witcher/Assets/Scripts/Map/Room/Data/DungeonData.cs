@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,15 +28,7 @@ public class DungeonData : MonoBehaviour
         Path = new();
         Destroy(PlayerReference);
     }
-
-    public IEnumerator TutorialCoroutine(Action code)
-    {
-        yield return new WaitForSeconds(1);
-        code();
-    }
 }
-
-
 /// <summary>
 /// Holds all the data about the room
 /// </summary>
@@ -46,13 +36,12 @@ public class Room
 {
     public Vector2 RoomCenterPos { get; set; }
     public HashSet<Vector2Int> FloorTiles { get; private set; } = new HashSet<Vector2Int>();
-
+    public roomType type { get; set; }
     public HashSet<Vector2Int> NearWallTilesUp { get; set; } = new HashSet<Vector2Int>();
     public HashSet<Vector2Int> NearWallTilesDown { get; set; } = new HashSet<Vector2Int>();
     public HashSet<Vector2Int> NearWallTilesLeft { get; set; } = new HashSet<Vector2Int>();
     public HashSet<Vector2Int> NearWallTilesRight { get; set; } = new HashSet<Vector2Int>();
     public HashSet<Vector2Int> CornerTiles { get; set; } = new HashSet<Vector2Int>();
-
     public HashSet<Vector2Int> InnerTiles { get; set; } = new HashSet<Vector2Int>();
 
     public HashSet<Vector2Int> PropPositions { get; set; } = new HashSet<Vector2Int>();
@@ -66,5 +55,11 @@ public class Room
     {
         this.RoomCenterPos = roomCenterPos;
         this.FloorTiles = floorTiles;
+    }
+    public enum roomType
+    {
+        start,
+        normal,
+        exit,
     }
 }

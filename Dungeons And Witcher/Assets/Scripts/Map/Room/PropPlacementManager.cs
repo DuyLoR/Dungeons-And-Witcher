@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -18,6 +17,9 @@ public class PropPlacementManager : MonoBehaviour
     [SerializeField]
     private GameObject propPrefab;
 
+    [SerializeField]
+    private Transform parent;
+
     public UnityEvent OnFinished;
 
     private void Awake()
@@ -31,6 +33,7 @@ public class PropPlacementManager : MonoBehaviour
             return;
         foreach (Room room in dungeonData.Rooms)
         {
+            if (room.type == Room.roomType.exit) continue;
             //Place props place props in the corners
             List<Prop> cornerProps = propsToPlace.Where(x => x.Corner).ToList();
             PlaceCornerProps(room, cornerProps);
@@ -75,31 +78,18 @@ public class PropPlacementManager : MonoBehaviour
             PlaceProps(room, innerProps, room.InnerTiles, PlacementOriginCorner.BottomLeft);
         }
 
-        //OnFinished?.Invoke();
-        Invoke("RunEvent", 1);
-
-    }
-
-    public void RunEvent()
-    {
         OnFinished?.Invoke();
     }
 
-    private IEnumerator TutorialCoroutine(Action code)
-    {
-        yield return new WaitForSeconds(3);
-        code();
-    }
 
     /// <summary>
-    /// Places props near walls. We need to specify the props anw the placement start point
+    /// Places props near walls. We need to specify the props and the placement start point
     /// </summary>
-    /// <param name="room"></param>
+    /// <param name="room">this room to place props</param>
     /// <param name="wallProps">Props that we should try to place</param>
     /// <param name="availableTiles">Tiles that are near the specific wall</param>
     /// <param name="placement">How to place bigger props. Ex near top wall we want to start placemt from the Top corner and find if there are free spaces below</param>
-    private void PlaceProps(
-        Room room, List<Prop> wallProps, HashSet<Vector2Int> availableTiles, PlacementOriginCorner placement)
+    private void PlaceProps(Room room, List<Prop> wallProps, HashSet<Vector2Int> availableTiles, PlacementOriginCorner placement)
     {
         //Remove path positions from the initial nearWallTiles to ensure the clear path to traverse dungeon
         HashSet<Vector2Int> tempPositons = new HashSet<Vector2Int>(availableTiles);
@@ -109,8 +99,7 @@ public class PropPlacementManager : MonoBehaviour
         foreach (Prop propToPlace in wallProps)
         {
             //We want to place only certain quantity of each prop
-            int quantity
-                = UnityEngine.Random.Range(propToPlace.PlacementQuantityMin, propToPlace.PlacementQuantityMax + 1);
+            int quantity = UnityEngine.Random.Range(propToPlace.PlacementQuantityMin, propToPlace.PlacementQuantityMax + 1);
 
             for (int i = 0; i < quantity; i++)
             {
@@ -119,7 +108,7 @@ public class PropPlacementManager : MonoBehaviour
                 //shuffel the positions
                 List<Vector2Int> availablePositions = tempPositons.OrderBy(x => Guid.NewGuid()).ToList();
                 //If placement has failed there is no point in trying to place the same prop again
-                if (TryPlacingPropBruteForce(room, propToPlace, availablePositions, placement) == false)
+                if (TryPlacingPropInPositions(room, propToPlace, availablePositions, placement) == false)
                     break;
             }
 
@@ -127,27 +116,24 @@ public class PropPlacementManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Tries to place the Prop using brute force (trying each available tile position)
+    /// Tries to place the Prop (trying each available tile position)
     /// </summary>
     /// <param name="room"></param>
     /// <param name="propToPlace"></param>
     /// <param name="availablePositions"></param>
     /// <param name="placement"></param>
     /// <returns>False if there is no space. True if placement was successful</returns>
-    private bool TryPlacingPropBruteForce(
-        Room room, Prop propToPlace, List<Vector2Int> availablePositions, PlacementOriginCorner placement)
+    private bool TryPlacingPropInPositions(Room room, Prop propToPlace, List<Vector2Int> availablePositions, PlacementOriginCorner placement)
     {
         //try placing the objects starting from the corner specified by the placement parameter
         for (int i = 0; i < availablePositions.Count; i++)
         {
             //select the specified position (but it can be already taken after placing the corner props as a group)
             Vector2Int position = availablePositions[i];
-            if (room.PropPositions.Contains(position))
-                continue;
+            if (room.PropPositions.Contains(position)) continue;
 
             //check if there is enough space around to fit the prop
-            List<Vector2Int> freePositionsAround
-                = TryToFitProp(propToPlace, availablePositions, position, placement);
+            List<Vector2Int> freePositionsAround = TryToFitProp(propToPlace, availablePositions, position, placement);
 
             //If we have enough spaces place the prop
             if (freePositionsAround.Count == propToPlace.PropSize.x * propToPlace.PropSize.y)
@@ -181,13 +167,9 @@ public class PropPlacementManager : MonoBehaviour
     /// <param name="originPosition"></param>
     /// <param name="placement"></param>
     /// <returns></returns>
-    private List<Vector2Int> TryToFitProp(
-        Prop prop,
-        List<Vector2Int> availablePositions,
-        Vector2Int originPosition,
-        PlacementOriginCorner placement)
+    private List<Vector2Int> TryToFitProp(Prop prop, List<Vector2Int> availablePositions, Vector2Int originPosition, PlacementOriginCorner placement)
     {
-        List<Vector2Int> freePositions = new();
+        List<Vector2Int> freePositions = new List<Vector2Int>();
 
         //Perform the specific loop depending on the PlacementOriginCorner
         if (placement == PlacementOriginCorner.BottomLeft)
@@ -277,8 +259,7 @@ public class PropPlacementManager : MonoBehaviour
     /// <param name="groupOriginPosition"></param>
     /// <param name="propToPlace"></param>
     /// <param name="searchOffset">The search offset ex 1 = we will check all tiles withing the distance of 1 unity away from origin position</param>
-    private void PlaceGroupObject(
-        Room room, Vector2Int groupOriginPosition, Prop propToPlace, int searchOffset)
+    private void PlaceGroupObject(Room room, Vector2Int groupOriginPosition, Prop propToPlace, int searchOffset)
     {
         //*Can work poorely when placing bigger props as groups
 
@@ -302,7 +283,6 @@ public class PropPlacementManager : MonoBehaviour
                 }
             }
         }
-
         //shuffle the list
         availableSpaces.OrderBy(x => Guid.NewGuid());
 
@@ -326,21 +306,21 @@ public class PropPlacementManager : MonoBehaviour
     {
         //Instantiat the prop at this positon
         GameObject prop = Instantiate(propPrefab);
+        prop.transform.SetParent(parent);
         SpriteRenderer propSpriteRenderer = prop.GetComponentInChildren<SpriteRenderer>();
+        CapsuleCollider2D collider = propSpriteRenderer.gameObject.AddComponent<CapsuleCollider2D>();
 
-        //set the sprite
+        //set data
         propSpriteRenderer.sprite = propToPlace.PropSprite;
-
-        //Add a collider
-        CapsuleCollider2D collider
-            = propSpriteRenderer.gameObject.AddComponent<CapsuleCollider2D>();
         collider.offset = Vector2.zero;
+        collider.isTrigger = propToPlace.isTrigger;
+
         if (propToPlace.PropSize.x > propToPlace.PropSize.y)
         {
+            //by default it is vetical
             collider.direction = CapsuleDirection2D.Horizontal;
         }
-        Vector2 size
-            = new Vector2(propToPlace.PropSize.x * 0.8f, propToPlace.PropSize.y * 0.8f);
+        Vector2 size = new Vector2(propToPlace.PropSize.x * 0.8f, propToPlace.PropSize.y * 0.8f);
         collider.size = size;
 
         prop.transform.localPosition = (Vector2)placementPostion;

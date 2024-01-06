@@ -9,7 +9,6 @@ public abstract class AbstractDungeonGenerator : MonoBehaviour
     {
         tilemapVisualizer.Clear();
         RunProceduralGeneration();
-        NavMesh.instance.UpdateNavMesh();
     }
 
     protected abstract void RunProceduralGeneration();

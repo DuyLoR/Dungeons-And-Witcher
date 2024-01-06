@@ -5,6 +5,7 @@ public class EnemyBase : MonoBehaviour
 {
     public EnemyStateMachine stateMachine;
     public EnemyBaseData enemyBaseData;
+    public Room room { get; private set; }
 
     public Rigidbody2D rb { get; private set; }
     public Animator animator { get; private set; }
@@ -90,7 +91,10 @@ public class EnemyBase : MonoBehaviour
         //TODO: Spawn item after destroy
         Destroy(gameObject);
     }
-
+    public void SetRoom(Room room)
+    {
+        this.room = room;
+    }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
