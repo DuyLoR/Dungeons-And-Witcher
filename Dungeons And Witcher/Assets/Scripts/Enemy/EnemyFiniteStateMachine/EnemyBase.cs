@@ -89,6 +89,7 @@ public class EnemyBase : MonoBehaviour
     public void DestroyGameObject()
     {
         //TODO: Spawn item after destroy
+        room.EnemiesInTheRoom.Remove(gameObject);
         Destroy(gameObject);
     }
     public void SetRoom(Room room)
