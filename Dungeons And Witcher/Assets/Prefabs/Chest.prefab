@@ -150,5 +150,4 @@ MonoBehaviour:
   - {fileID: 8736335716243086389, guid: 25af7db388c2a0a43aefe4b5a2d34f11, type: 3}
   - {fileID: 1830019707378524824, guid: 034d08b712841c6448519a54d7c5d775, type: 3}
   - {fileID: 3256075246616101981, guid: e3c3a1ca39b486a4eb3a73159d67ae38, type: 3}
-  spawnItemChange: 0.7
-  force: 0.5
+  force: 5

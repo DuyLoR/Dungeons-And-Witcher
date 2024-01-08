@@ -18,6 +18,6 @@ MonoBehaviour:
   type: 0
   manaUse: 5
   damage: 100
-  orbSpeed: 10
+  orbSpeed: 20
   castDelay: 0.1
   timeActive: 1

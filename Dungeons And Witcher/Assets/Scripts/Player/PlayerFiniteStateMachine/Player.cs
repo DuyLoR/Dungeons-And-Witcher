@@ -67,7 +67,8 @@ public class Player : MonoBehaviour, IDamageable
 
         // INVENTORY
         InventoryManager.Instance.mainInventory.SetActive(inputHandle.inventoryInput);
-        InventoryManager.Instance.orbInventory.SetActive(inputHandle.inventoryInput);
+        InventoryManager.Instance.orbInventorypanel.SetActive(inputHandle.inventoryInput);
+        InventoryManager.Instance.weaponInfoPanel.SetActive(inputHandle.inventoryInput);
 
         if (!weaponHasBeenSet)
         {

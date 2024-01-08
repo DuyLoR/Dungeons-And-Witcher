@@ -22,4 +22,4 @@ MonoBehaviour:
   startOrbDatas:
   - {fileID: 11400000, guid: efa17206faa396f408c792a1821fb378, type: 2}
   maxWeaponIS: 3
-  maxOrbIS: 14
+  maxOrbIS: 10

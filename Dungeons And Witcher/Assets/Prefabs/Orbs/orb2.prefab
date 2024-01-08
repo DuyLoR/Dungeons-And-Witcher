@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -6568190878374198029}
   - component: {fileID: -5055888874791552974}
   - component: {fileID: 3675121176150421971}
+  - component: {fileID: 9032262838749907513}
   m_Layer: 0
   m_Name: orb2
   m_TagString: Untagged
@@ -159,3 +160,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &9032262838749907513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830019707378524824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3574488c5f36445951bf8bc404b097, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orbData: {fileID: 11400000, guid: efa17206faa396f408c792a1821fb378, type: 2}

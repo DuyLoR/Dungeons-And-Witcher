@@ -24,6 +24,7 @@ public class InventoryDropArea : MonoBehaviour, IDropHandler
             InventoryManager.Instance.RemoveOrb(orbItemDrag.parentAfterDrag, orbItemDrag.orbData);
             var DroppedItem = Instantiate(orbItemDrag.orbData.orbPrefab);
             DroppedItem.transform.position = playerPos.position;
+            DroppedItem.GetComponent<Orb>().enabled = false;
         }
     }
 }
