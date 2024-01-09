@@ -1,60 +1,123 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class WeaponInfo : MonoBehaviour
 {
-    [SerializeField]
-    private Image spriteImage;
+    public static WeaponInfo instance;
+    [Header("Image")]
+    [SerializeField] private Image image;
+    [Header("Text")]
+    [SerializeField] private TextMeshProUGUI nameTMP;
+    [SerializeField] private TextMeshProUGUI maxManaTMP;
+    [SerializeField] private TextMeshProUGUI manaRegenTMP;
+    [SerializeField] private TextMeshProUGUI castDelayTMP;
+    [SerializeField] private TextMeshProUGUI rechargeTimeTMP;
+    [SerializeField] private TextMeshProUGUI capacityTMP;
 
-    [SerializeField]
-    private GameObject statsPanel;
-    [SerializeField]
-    private GameObject OrbsPanel;
+    [Header("Orb")]
+    [SerializeField] private Transform orbsPanel;
+    [SerializeField] private GameObject orbSlotPrefab;
+    [SerializeField] private GameObject orbItemPrefab;
 
-    [SerializeField]
-    private GameObject statPrefab;
-    [SerializeField]
-    private GameObject OrbInventoryPrefab;
+    [SerializeField] private List<OrbInventorySlot> orbInventorySlots = new List<OrbInventorySlot>();
+    [SerializeField] private List<OrbItem> orbItems = new List<OrbItem>();
 
-    [SerializeField]
-    private List<OrbInventorySlot> orbInventorySlots = new List<OrbInventorySlot>();
-    private void OnEnable()
+    [Header("Parent")]
+    [SerializeField] private Transform weaponInfoPanel;
+
+    private WeaponData weaponData;
+
+    private void Awake()
     {
-        InventoryManager.OnWeaponData += InventoryManager_OnWeaponData;
+        instance = this;
     }
-    private void OnDisable()
+    public void SetWeaponData(WeaponData weaponData)
     {
-        InventoryManager.OnWeaponData -= InventoryManager_OnWeaponData;
-    }
-    private void InventoryManager_OnWeaponData(WeaponData weaponData)
-    {
-        if (weaponData.orbDatas != null)
+        this.weaponData = weaponData;
+        if (weaponData == null)
         {
-            for (int i = 0; i < weaponData.orbDatas.Length; i++)
+            return;
+        }
+        else
+        {
+            InitializeWeaponInfo();
+        }
+    }
 
+
+    private void InitializeWeaponInfo()
+    {
+        image.sprite = weaponData.weaponPrefab.GetComponentInChildren<SpriteRenderer>().sprite;
+        nameTMP.text = weaponData.WeaponName.ToString();
+        maxManaTMP.text = weaponData.maxMana.ToString();
+        manaRegenTMP.text = weaponData.manaRegen.ToString();
+        castDelayTMP.text = weaponData.castDelay.ToString();
+        rechargeTimeTMP.text = weaponData.rechargeTime.ToString();
+        capacityTMP.text = weaponData.capacity.ToString();
+
+        GenerateOrbSlots();
+        GenerateOrbItems();
+
+    }
+    private void GenerateOrbItems()
+    {
+        if (weaponData.orbDatas.Length == 0) return;
+        for (int i = 0; i < weaponData.orbDatas.Length; i++)
+        {
+            if (orbItems.Count <= i)
             {
-                orbInventorySlots.Add(Instantiate(OrbInventoryPrefab).GetComponent<OrbInventorySlot>());
-                orbInventorySlots[i].transform.SetParent(OrbsPanel.transform);
+                OrbItem orbItemInSlot = orbInventorySlots[i].GetComponentInChildren<OrbItem>();
+                if (orbItemInSlot == null)
+                {
+                    orbItems.Add(Instantiate(orbItemPrefab, orbInventorySlots[i].transform).GetComponent<OrbItem>());
+                    orbItems[i].InitializeOrbItem(weaponData.orbDatas[i]);
+                }
+                else
+                {
+                    orbItems[i].InitializeOrbItem(weaponData.orbDatas[i]);
+                }
             }
-            for (int i = 0; i < orbInventorySlots.Count; i++)
+            else
             {
-                var orb = Instantiate(weaponData.orbDatas[i].orbPrefab);
-                orb.transform.SetParent(orbInventorySlots[i].transform);
-
+                orbItems[i].InitializeOrbItem(weaponData.orbDatas[i]);
+                orbItems[i].gameObject.SetActive(true);
+            }
+        }
+        if (orbItems.Count > weaponData.capacity)
+        {
+            for (int i = weaponData.capacity; i < orbItems.Count; i++)
+            {
+                orbItems[i].gameObject.SetActive(false);
             }
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void GenerateOrbSlots()
     {
-
+        for (int i = 0; i < weaponData.capacity; i++)
+        {
+            if (orbInventorySlots.Count <= i)
+            {
+                orbInventorySlots.Add(Instantiate(orbSlotPrefab, orbsPanel).GetComponent<OrbInventorySlot>());
+            }
+            else
+            {
+                orbInventorySlots[i].gameObject.SetActive(true);
+            }
+        }
+        if (orbInventorySlots.Count > weaponData.capacity)
+        {
+            for (int i = weaponData.capacity; i < orbInventorySlots.Count; i++)
+            {
+                orbInventorySlots[i].gameObject.SetActive(false);
+            }
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public bool isWeaponDataNotNull()
     {
-
+        return weaponData != null;
     }
 }

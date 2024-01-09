@@ -84,6 +84,7 @@ public class Weapon : MonoBehaviour
     {
         if (weaponData == newWeaponData) return;
         weaponData = newWeaponData;
+        WeaponInfo.instance.SetWeaponData(weaponData);
         if (weaponData == null)
         {
             if (currentWeapon != null)

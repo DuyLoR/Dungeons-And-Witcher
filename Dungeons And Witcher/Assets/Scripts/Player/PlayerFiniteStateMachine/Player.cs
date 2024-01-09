@@ -64,19 +64,12 @@ public class Player : MonoBehaviour, IDamageable
         {
             isTakendameOver = true;
         }
-
-        // INVENTORY
-        InventoryManager.Instance.mainInventory.SetActive(inputHandle.inventoryInput);
-        InventoryManager.Instance.orbInventorypanel.SetActive(inputHandle.inventoryInput);
-        InventoryManager.Instance.weaponInfoPanel.SetActive(inputHandle.inventoryInput);
-
+        //WEAPON
         if (!weaponHasBeenSet)
         {
             weaponHasBeenSet = true;
-            weapon.InitializeWeapon(InventoryManager.Instance.GetSeletedWeapon());
+            weapon.SetWeaponData(InventoryManager.Instance.GetSeletedWeapon());
         }
-
-        //WEAPON
         if (inputHandle.isWeaponInput)
         {
             InventoryManager.Instance.ChangeSelectedWeaponSlot(inputHandle.ChangeWeaponInput);
@@ -90,6 +83,11 @@ public class Player : MonoBehaviour, IDamageable
             weapon.CheckIfShouldFlip(facingDirection);
             weapon.RotationAngleOfWeapon();
         }
+
+        // INVENTORY
+        InventoryManager.Instance.mainInventory.SetActive(inputHandle.inventoryInput);
+        InventoryManager.Instance.orbInventorypanel.SetActive(inputHandle.inventoryInput);
+        InventoryManager.Instance.weaponInfoPanel.SetActive(inputHandle.inventoryInput && WeaponInfo.instance.isWeaponDataNotNull());
     }
     private void FixedUpdate()
     {

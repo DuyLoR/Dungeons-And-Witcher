@@ -11,7 +11,7 @@ public class OrbItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragHand
     public GameObject gameObjectToDropped { get; private set; }
 
     private Image image;
-    public void InitialiseOrbItem(OrbData neworbData)
+    public void InitializeOrbItem(OrbData neworbData)
     {
         this.orbData = neworbData;
         image = GetComponent<Image>();

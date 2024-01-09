@@ -15,5 +15,10 @@ MonoBehaviour:
   weaponPrefab: {fileID: 7637685876544118, guid: 8c1d13841a515344891868f25ccf6125, type: 3}
   WeaponName: Green
   WeaponDescription: 
+  castDelay: 0.1
+  rechargeTime: 0.2
+  maxMana: 100
+  manaRegen: 10
+  capacity: 4
   orbDatas:
   - {fileID: 11400000, guid: efa17206faa396f408c792a1821fb378, type: 2}

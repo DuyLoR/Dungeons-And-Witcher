@@ -5,7 +5,6 @@ using UnityEngine;
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
-    public static event Action<WeaponData> OnWeaponData;
     public InventoryData InventoryData;
     [SerializeField]
     public WeaponInventorySlot[] weaponInventorySlots;
@@ -72,19 +71,7 @@ public class InventoryManager : MonoBehaviour
         }
         weaponInventorySlots[newValue].Select();
         selectedWeapon = newValue;
-        ShowWeaponInfo(GetSeletedWeapon());
     }
-
-    private void ShowWeaponInfo(WeaponData weaponData)
-    {
-        if (weaponData == null) weaponInfoPanel.SetActive(false);
-        else
-        {
-            weaponInfoPanel.gameObject.SetActive(true);
-            OnWeaponData?.Invoke(weaponData);
-        }
-    }
-
     private void GenerateOrbSlot()
     {
         for (int i = 0; i < orbInventorySlots.Length; i++)
@@ -210,7 +197,7 @@ public class InventoryManager : MonoBehaviour
     {
         GameObject newOrbItem = Instantiate(InventoryData.orbItemPrefab, orbSlot.transform);
         OrbItem orbItem = newOrbItem.GetComponent<OrbItem>();
-        orbItem.InitialiseOrbItem(orbData);
+        orbItem.InitializeOrbItem(orbData);
     }
 
     public void RemoveOrb(Transform parent, OrbData orbData)
