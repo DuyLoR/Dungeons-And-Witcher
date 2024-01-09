@@ -19,6 +19,8 @@ MonoBehaviour:
   rechargeTime: 0.2
   maxMana: 100
   manaRegen: 10
-  capacity: 4
   orbDatas:
   - {fileID: 11400000, guid: efa17206faa396f408c792a1821fb378, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

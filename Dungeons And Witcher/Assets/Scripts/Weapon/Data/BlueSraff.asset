@@ -23,3 +23,5 @@ MonoBehaviour:
   orbDatas:
   - {fileID: 11400000, guid: 9328ee59c4419ab4096d5b8ac73f359d, type: 2}
   - {fileID: 11400000, guid: e7de1c79eb62b7f41b162fd3131f8043, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
