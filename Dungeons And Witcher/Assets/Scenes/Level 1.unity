@@ -5906,7 +5906,7 @@ GameObject:
   - component: {fileID: 1425381639}
   - component: {fileID: 1425381638}
   m_Layer: 5
-  m_Name: OrbSpeep
+  m_Name: OrbSpeed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8374,7 +8374,6 @@ GameObject:
   - component: {fileID: 1899825126}
   - component: {fileID: 1899825128}
   - component: {fileID: 1899825127}
-  - component: {fileID: 1899825129}
   m_Layer: 5
   m_Name: MainInventory
   m_TagString: Untagged
@@ -8440,18 +8439,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1899825125}
   m_CullTransparentMesh: 1
---- !u!114 &1899825129
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1899825125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6dab1b316233ec243bb2db4fd7910105, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1919597300
 GameObject:
   m_ObjectHideFlags: 0
@@ -9411,7 +9398,7 @@ Camera:
   m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
+  m_FocalLength: 8.4375
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -9420,9 +9407,9 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  field of view: 70
+  orthographic: 1
+  orthographic size: 8.4375
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2

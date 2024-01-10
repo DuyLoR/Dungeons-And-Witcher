@@ -13,14 +13,11 @@ public class OrbInventorySlot : MonoBehaviour, IDropHandler
         OrbItem currentOrbItem = GetComponentInChildren<OrbItem>();
         if (currentOrbItem != null)
         {
-            currentOrbItem.SetParentAfterDrag(orbItemDrag.parentAfterDrag);
+            currentOrbItem.SetDroppedTransform(orbItemDrag.parentAfterDrag);
             currentOrbItem.SetTransform();
         }
-        if (orbItemDrag != null)
-        {
-            orbItemDrag.SetParentAfterDrag(transform);
-            orbItemDrag.SetTransform();
-        }
+        orbItemDrag.SetDroppedTransform(transform);
+        orbItemDrag.SetTransform();
 
         OnOrbsUpdated?.Invoke(orbItemDrag, currentOrbItem);
     }

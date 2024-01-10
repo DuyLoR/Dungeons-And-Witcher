@@ -8,8 +8,7 @@ public class WeaponItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragH
     public static event Action<WeaponData> OnWeaponCollected;
     public WeaponData weaponData;
     public Transform parentAfterDrag { get; private set; }
-    public GameObject gameObjectToDropped { get; private set; }
-
+    public Transform droppedTransform { get; private set; }
     private Image image;
     public void InitializeWeaponItem(WeaponData newWeapodata)
     {
@@ -25,6 +24,7 @@ public class WeaponItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragH
     public void OnBeginDrag(PointerEventData eventData)
     {
         parentAfterDrag = transform.parent;
+        droppedTransform = Player.Instance.transform;
 
         transform.SetParent(transform.root);
         transform.SetAsLastSibling();
@@ -38,27 +38,26 @@ public class WeaponItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragH
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (gameObjectToDropped == null)
+        if (droppedTransform == Player.Instance.transform)
         {
+            var weapon = Instantiate(weaponData.weaponPrefab);
+            weapon.transform.position = droppedTransform.position;
             Destroy(gameObject);
         }
-        transform.SetParent(parentAfterDrag);
-        image.raycastTarget = true;
+        else
+        {
+            transform.SetParent(droppedTransform);
+            image.raycastTarget = true;
+        }
     }
 
-    public void SetParentAfterDrag(Transform transform)
+    public void SetDroppedTransform(Transform transform)
     {
-        gameObjectToDropped = transform.gameObject;
-        parentAfterDrag = transform;
+        droppedTransform = transform;
     }
     public void SetTransform()
     {
-        transform.SetParent(parentAfterDrag);
-    }
-
-    public void SetPosition(Vector3 position)
-    {
-        transform.position = position;
+        transform.SetParent(droppedTransform);
     }
 
     public void Collect()

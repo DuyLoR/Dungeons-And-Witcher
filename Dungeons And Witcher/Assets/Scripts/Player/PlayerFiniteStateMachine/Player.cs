@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, IDamageable
 {
+    public static Player Instance;
     public PlayerStateMachine stateMachine { get; private set; }
     public PlayerIdleState idleState { get; private set; }
     public PlayerMoveState moveState { get; private set; }
@@ -33,6 +34,7 @@ public class Player : MonoBehaviour, IDamageable
 
     public void Awake()
     {
+        Instance = this;
         stateMachine = new PlayerStateMachine();
 
         idleState = new PlayerIdleState(this, stateMachine, playerData, "idle");
@@ -142,6 +144,11 @@ public class Player : MonoBehaviour, IDamageable
         {
             stateMachine.ChangeState(deadState);
         }
+        HealBar.instance.SetHealth(currentHeal);
+    }
+    public void UpHp(int amount)
+    {
+        currentHeal += amount;
         HealBar.instance.SetHealth(currentHeal);
     }
     public void DestroyGameObject()

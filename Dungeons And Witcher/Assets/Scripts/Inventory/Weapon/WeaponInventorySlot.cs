@@ -28,14 +28,12 @@ public class WeaponInventorySlot : MonoBehaviour, IDropHandler
         WeaponItem currentWeaponItem = GetComponentInChildren<WeaponItem>();
         if (currentWeaponItem != null)
         {
-            currentWeaponItem.SetParentAfterDrag(weaponItemDrag.parentAfterDrag);
+            currentWeaponItem.SetDroppedTransform(weaponItemDrag.parentAfterDrag);
             currentWeaponItem.SetTransform();
         }
-        if (weaponItemDrag != null)
-        {
-            weaponItemDrag.SetParentAfterDrag(transform);
-            weaponItemDrag.SetTransform();
-        }
+        weaponItemDrag.SetDroppedTransform(transform);
+        weaponItemDrag.SetTransform();
+
     }
 
     public void RemoveItemFromInventory(WeaponData weaponData)

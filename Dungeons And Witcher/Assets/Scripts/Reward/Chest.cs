@@ -19,7 +19,7 @@ public class Chest : MonoBehaviour
     }
     private void SpawnItem()
     {
-        if (Random.Range(0, 1) == 0)
+        if (Random.Range(0, orbItems.Count - 1) == 0)
         {
             Instantiate(healItem, transform);
             return;

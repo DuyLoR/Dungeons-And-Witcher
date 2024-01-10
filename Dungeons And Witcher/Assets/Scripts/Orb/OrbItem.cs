@@ -8,7 +8,7 @@ public class OrbItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragHand
     public static event Action<OrbData> OnOrbCollected;
     public OrbData orbData;
     public Transform parentAfterDrag { get; private set; }
-    public GameObject gameObjectToDropped { get; private set; }
+    public Transform droppedTransform { get; private set; }
 
     private Image image;
     public void InitializeOrbItem(OrbData neworbData)
@@ -22,6 +22,7 @@ public class OrbItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragHand
     public void OnBeginDrag(PointerEventData eventData)
     {
         parentAfterDrag = transform.parent;
+        droppedTransform = Player.Instance.transform;
 
         transform.SetParent(transform.root);
         transform.SetAsLastSibling();
@@ -35,21 +36,25 @@ public class OrbItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragHand
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (gameObjectToDropped == null)
+        if (droppedTransform == Player.Instance.transform)
         {
+            var orb = Instantiate(orbData.orbPrefab);
+            orb.transform.position = droppedTransform.position;
             Destroy(gameObject);
         }
-        transform.SetParent(parentAfterDrag);
-        image.raycastTarget = true;
+        else
+        {
+            transform.SetParent(droppedTransform);
+            image.raycastTarget = true;
+        }
     }
-    public void SetParentAfterDrag(Transform transform)
+    public void SetDroppedTransform(Transform transform)
     {
-        gameObjectToDropped = transform.gameObject;
-        parentAfterDrag = transform;
+        droppedTransform = transform;
     }
     public void SetTransform()
     {
-        transform.SetParent(parentAfterDrag);
+        transform.SetParent(droppedTransform);
     }
 
     public void Collect()
@@ -57,6 +62,7 @@ public class OrbItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragHand
         Destroy(gameObject);
         OnOrbCollected?.Invoke(orbData);
     }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         ToolTip.instance.gameObject.SetActive(true);
