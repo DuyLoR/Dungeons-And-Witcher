@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class OrbItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class OrbItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public static event Action<OrbData> OnOrbCollected;
     public OrbData orbData;
@@ -57,4 +57,16 @@ public class OrbItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragHand
         Destroy(gameObject);
         OnOrbCollected?.Invoke(orbData);
     }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        ToolTip.instance.gameObject.SetActive(true);
+        ToolTip.instance.GenerateToolTip(GetComponentInChildren<OrbItem>());
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        ToolTip.instance.gameObject.SetActive(false);
+    }
+
+
 }

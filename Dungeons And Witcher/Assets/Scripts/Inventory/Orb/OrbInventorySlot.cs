@@ -16,11 +16,15 @@ public class OrbInventorySlot : MonoBehaviour, IDropHandler
             currentOrbItem.SetParentAfterDrag(orbItemDrag.parentAfterDrag);
             currentOrbItem.SetTransform();
         }
-        orbItemDrag.SetParentAfterDrag(transform);
-        orbItemDrag.SetTransform();
+        if (orbItemDrag != null)
+        {
+            orbItemDrag.SetParentAfterDrag(transform);
+            orbItemDrag.SetTransform();
+        }
 
         OnOrbsUpdated?.Invoke(orbItemDrag, currentOrbItem);
     }
+
     public void RemoveItemFromInventory(OrbData orbData)
     {
         if (orbData == null) return;

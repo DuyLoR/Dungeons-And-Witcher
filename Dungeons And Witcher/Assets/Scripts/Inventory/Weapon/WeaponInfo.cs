@@ -137,6 +137,7 @@ public class WeaponInfo : MonoBehaviour
     }
     private void UpdateOrbsWeaponData(OrbItem firstOrb, OrbItem secondOrb)
     {
+        if (weaponData.orbDatas.Length == 0) return;
         for (int i = 0; i < orbsPanel.childCount; i++)
         {
             var orbItem = orbsPanel.GetChild(i).GetComponentInChildren<OrbItem>();

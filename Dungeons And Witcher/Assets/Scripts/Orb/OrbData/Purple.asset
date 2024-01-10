@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c2dc4924c5674e468903918e6305276, type: 3}
-  m_Name: GreenOrb
+  m_Name: Purple
   m_EditorClassIdentifier: 
-  orbPrefab: {fileID: 3256075246616101981, guid: e3c3a1ca39b486a4eb3a73159d67ae38, type: 3}
-  orbName: 
+  orbPrefab: {fileID: 1830019707378524824, guid: 034d08b712841c6448519a54d7c5d775, type: 3}
+  orbName: Purple Orb
   orbDescription: 
   type: 0
   manaUse: 5
-  damage: 100
+  damage: 10
   orbSpeed: 20
   castDelay: 0.1
-  timeActive: 2.5
+  timeActive: 1

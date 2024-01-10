@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -151,11 +150,6 @@ public class InventoryManager : MonoBehaviour
             return weaponItemInSlot.weaponData;
         }
         return null;
-    }
-    public int GetSlotIndex(WeaponInventorySlot slot)
-    {
-        Debug.Log(Array.IndexOf(weaponInventorySlots, slot));
-        return Array.IndexOf(weaponInventorySlots, slot);
     }
 
     public bool AddOrb(OrbData orbData)

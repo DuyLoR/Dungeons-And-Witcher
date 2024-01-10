@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c2dc4924c5674e468903918e6305276, type: 3}
-  m_Name: PosionOrb
+  m_Name: Blue
   m_EditorClassIdentifier: 
   orbPrefab: {fileID: 8736335716243086389, guid: 25af7db388c2a0a43aefe4b5a2d34f11, type: 3}
-  orbName: "Ng\u1ECDc \u0110\u1ED9c"
+  orbName: Blue Orb
   orbDescription: 
   type: 0
   manaUse: 5

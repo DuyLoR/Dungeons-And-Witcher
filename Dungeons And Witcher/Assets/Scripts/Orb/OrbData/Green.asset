@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c2dc4924c5674e468903918e6305276, type: 3}
-  m_Name: FreOrb
+  m_Name: Green
   m_EditorClassIdentifier: 
-  orbPrefab: {fileID: 1830019707378524824, guid: 034d08b712841c6448519a54d7c5d775, type: 3}
-  orbName: "Ng\u1ECDc \u0110\u1ECF"
+  orbPrefab: {fileID: 3256075246616101981, guid: e3c3a1ca39b486a4eb3a73159d67ae38, type: 3}
+  orbName: Green Orb
   orbDescription: 
   type: 0
   manaUse: 5
-  damage: 10
+  damage: 100
   orbSpeed: 20
   castDelay: 0.1
-  timeActive: 1
+  timeActive: 2.5
