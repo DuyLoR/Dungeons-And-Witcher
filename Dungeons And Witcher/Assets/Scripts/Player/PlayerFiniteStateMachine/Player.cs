@@ -54,8 +54,9 @@ public class Player : MonoBehaviour, IDamageable
         stateMachine.Initialize(idleState);
         playerCollector.Initialize(this);
         currentHeal = playerData.maxHp;
-        takendameTimer = Time.time;
+        Debug.Log(currentHeal);
         facingDirection = 1;
+        HealBar.instance.SetMaxHealth(currentHeal);
     }
     private void Update()
     {
@@ -133,7 +134,7 @@ public class Player : MonoBehaviour, IDamageable
         TextMeshPro txt = popUp.GetComponent<TextMeshPro>();
         txt.text = amount.ToString();
 
-        currentHeal -= amount;
+        currentHeal = (currentHeal - amount) < 0 ? 0 : (currentHeal - amount);
         takendameTimer = Time.time;
         isTakendameOver = false;
 
@@ -141,6 +142,7 @@ public class Player : MonoBehaviour, IDamageable
         {
             stateMachine.ChangeState(deadState);
         }
+        HealBar.instance.SetHealth(currentHeal);
     }
     public void DestroyGameObject()
     {

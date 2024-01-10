@@ -24,10 +24,12 @@ public class Weapon : MonoBehaviour
         facingDirection = 1;
         startTime = Time.time;
         timeRecharge = 0;
+        currentWeaponMana = 0;
     }
 
     private void Update()
     {
+        ManaBar.instance.SetMana(currentWeaponMana);
         if (weaponData != InventoryManager.Instance.GetSeletedWeapon())
         {
             SetWeaponData(InventoryManager.Instance.GetSeletedWeapon());
@@ -48,13 +50,16 @@ public class Weapon : MonoBehaviour
             }
             if (weaponData.orbDatas[currentWeaponOrbIndex] != null)
             {
-                if (Time.time >= startTime + weaponData.castDelay + weaponData.orbDatas[currentWeaponOrbIndex].castDelay + timeRecharge && isAttack)
+                if (currentWeaponMana >= weaponData.orbDatas[currentWeaponOrbIndex].manaUse)
                 {
-                    startTime = Time.time;
-                    if (currentWeaponMana >= 0 && weaponData.orbDatas[currentWeaponOrbIndex].manaUse <= currentWeaponMana)
+                    if (Time.time >= startTime + weaponData.castDelay + weaponData.orbDatas[currentWeaponOrbIndex].castDelay + timeRecharge && isAttack)
                     {
-                        AddNewOrbInPool(weaponData.orbDatas[currentWeaponOrbIndex]);
-                        FireOrb();
+                        startTime = Time.time;
+                        if (currentWeaponMana >= 0 && weaponData.orbDatas[currentWeaponOrbIndex].manaUse <= currentWeaponMana)
+                        {
+                            AddNewOrbInPool(weaponData.orbDatas[currentWeaponOrbIndex]);
+                            FireOrb();
+                        }
                     }
                 }
             }
@@ -85,6 +90,7 @@ public class Weapon : MonoBehaviour
         spriteRenderer = currentWeapon.GetComponentInChildren<SpriteRenderer>();
         orbSpawnPoint = currentWeapon.transform.Find("OrbSpawnPoint").transform;
         currentWeaponMana = weaponData.maxMana;
+        ManaBar.instance.SetMaxMana(currentWeaponMana);
     }
     public void SetWeaponData(WeaponData newWeaponData)
     {
@@ -146,7 +152,6 @@ public class Weapon : MonoBehaviour
         Orb currentOrb = OrbSpawnPool.Instance.GetFromPool(currentWeaponOrb).GetComponent<Orb>();
         ChangeDataCurrentOrb(currentOrb);
         currentWeaponMana -= currentOrb.orbData.manaUse;
-
         currentWeaponOrbIndex = (currentWeaponOrbIndex + 1) % weaponData.orbDatas.Length;
         timeRecharge = currentWeaponOrbIndex == 0 ? weaponData.rechargeTime : 0;
     }

@@ -63,6 +63,9 @@ TagManager:
   - name: Player
     uniqueID: 3494338849
     locked: 0
+  - name: Floor Decoration 1
+    uniqueID: 2019861613
+    locked: 0
   - name: Weapon
     uniqueID: 2126536413
     locked: 0
@@ -71,4 +74,7 @@ TagManager:
     locked: 0
   - name: Orb
     uniqueID: 2166338687
+    locked: 0
+  - name: PopUp
+    uniqueID: 3501397829
     locked: 0

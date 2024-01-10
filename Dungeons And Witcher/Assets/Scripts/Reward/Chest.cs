@@ -5,6 +5,8 @@ public class Chest : MonoBehaviour
 {
     [SerializeField]
     private List<GameObject> orbItems = new List<GameObject>();
+    [SerializeField]
+    private GameObject healItem;
     //[SerializeField]
     //private float force = 0.5f;
 
@@ -17,6 +19,11 @@ public class Chest : MonoBehaviour
     }
     private void SpawnItem()
     {
+        if (Random.Range(0, 1) == 0)
+        {
+            Instantiate(healItem, transform);
+            return;
+        }
         var orbItem = orbItems[Random.Range(0, orbItems.Count - 1)];
         var newOrbItem = Instantiate(orbItem, transform);
         newOrbItem.GetComponent<Orb>().enabled = false;

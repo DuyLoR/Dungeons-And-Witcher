@@ -23,6 +23,7 @@ public class ToolTip : MonoBehaviour
     private void LateUpdate()
     {
         transform.position = Input.mousePosition;
+        gameObject.SetActive(InventoryManager.Instance.mainInventory.gameObject.activeInHierarchy);
     }
     public void GenerateToolTip(OrbItem orbItem)
     {

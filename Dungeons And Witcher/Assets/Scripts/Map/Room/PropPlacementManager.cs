@@ -312,6 +312,7 @@ public class PropPlacementManager : MonoBehaviour
 
         //set data
         propSpriteRenderer.sprite = propToPlace.PropSprite;
+        propSpriteRenderer.sortingLayerName = propToPlace.sortingLayerName;
         collider.offset = Vector2.zero;
         collider.isTrigger = propToPlace.isTrigger;
 
