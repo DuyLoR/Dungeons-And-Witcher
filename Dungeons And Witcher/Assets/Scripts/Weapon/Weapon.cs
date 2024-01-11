@@ -19,6 +19,8 @@ public class Weapon : MonoBehaviour
     private float timeRecharge;
 
     private bool isAttack;
+    private bool isStartChangeWeapon;
+    private bool isRechargeTime;
     private void Awake()
     {
         facingDirection = 1;
@@ -34,7 +36,8 @@ public class Weapon : MonoBehaviour
         {
             SetWeaponData(InventoryManager.Instance.GetSeletedWeapon());
         }
-        if (weaponData != null && weaponData.orbDatas.Length >= 0)
+
+        if (weaponData != null && weaponData.orbDatas.Length > 0)
         {
             manaRegenTimer += Time.deltaTime;
             if (manaRegenTimer >= 1)
@@ -52,9 +55,17 @@ public class Weapon : MonoBehaviour
             {
                 if (currentWeaponMana >= weaponData.orbDatas[currentWeaponOrbIndex].manaUse)
                 {
+                    if (!isStartChangeWeapon) timeRecharge = currentWeaponOrbIndex == WeaponInfo.instance.GetFirstOrb() ? weaponData.rechargeTime : 0;
+                    if (timeRecharge > 0 && !isRechargeTime)
+                    {
+                        isRechargeTime = true;
+                        RechargeBar.instance.StartRechargeTime(weaponData.rechargeTime);
+                    }
                     if (Time.time >= startTime + weaponData.castDelay + weaponData.orbDatas[currentWeaponOrbIndex].castDelay + timeRecharge && isAttack)
                     {
                         startTime = Time.time;
+                        timeRecharge = 0;
+                        isRechargeTime = false;
                         if (currentWeaponMana >= 0 && weaponData.orbDatas[currentWeaponOrbIndex].manaUse <= currentWeaponMana)
                         {
                             AddNewOrbInPool(weaponData.orbDatas[currentWeaponOrbIndex]);
@@ -91,6 +102,9 @@ public class Weapon : MonoBehaviour
         orbSpawnPoint = currentWeapon.transform.Find("OrbSpawnPoint").transform;
         currentWeaponMana = weaponData.maxMana;
         ManaBar.instance.SetMaxMana(currentWeaponMana);
+        RechargeBar.instance.SetMaxRechargeTime(weaponData.rechargeTime);
+        timeRecharge = 0;
+        isStartChangeWeapon = true;
     }
     public void SetWeaponData(WeaponData newWeaponData)
     {
@@ -148,12 +162,13 @@ public class Weapon : MonoBehaviour
     }
     private void FireOrb()
     {
+
         currentWeaponOrb = weaponData.orbDatas[currentWeaponOrbIndex].orbPrefab;
         Orb currentOrb = OrbSpawnPool.Instance.GetFromPool(currentWeaponOrb).GetComponent<Orb>();
         ChangeDataCurrentOrb(currentOrb);
         currentWeaponMana -= currentOrb.orbData.manaUse;
         currentWeaponOrbIndex = (currentWeaponOrbIndex + 1) % weaponData.orbDatas.Length;
-        timeRecharge = currentWeaponOrbIndex == 0 ? weaponData.rechargeTime : 0;
+        isStartChangeWeapon = false;
     }
     public void RotationAngleOfWeapon()
     {

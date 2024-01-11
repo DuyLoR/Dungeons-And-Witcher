@@ -11,9 +11,6 @@ public class ManaBar : MonoBehaviour
     private void Awake()
     {
         instance = this;
-    }
-    private void Start()
-    {
         slider = GetComponent<Slider>();
         text = GetComponentInChildren<TextMeshProUGUI>();
     }

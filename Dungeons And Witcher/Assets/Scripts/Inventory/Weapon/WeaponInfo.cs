@@ -36,6 +36,7 @@ public class WeaponInfo : MonoBehaviour
     private void Start()
     {
         OrbInventorySlot.OnOrbsUpdated += UpdateOrbsWeaponData;
+        OrbItem.OnOrbDroppedOnMap += UpdateOrbsWeaponData;
     }
     public void SetWeaponData(WeaponData weaponData)
     {
@@ -135,7 +136,7 @@ public class WeaponInfo : MonoBehaviour
             }
         }
     }
-    private void UpdateOrbsWeaponData(OrbItem firstOrb, OrbItem secondOrb)
+    private void UpdateOrbsWeaponData()
     {
         if (weaponData == null) return;
         if (weaponData.orbDatas.Length == 0) return;
@@ -156,6 +157,18 @@ public class WeaponInfo : MonoBehaviour
         }
     }
 
+    public int GetFirstOrb()
+    {
+        if (weaponData == null) return -1;
+        for (int i = 0; i < weaponData.orbDatas.Length; i++)
+        {
+            if (weaponData.orbDatas[i] != null)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
     public bool isWeaponDataNotNull()
     {
         return weaponData != null;

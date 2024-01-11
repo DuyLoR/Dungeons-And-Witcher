@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 [Serializable]
 public class OrbInventorySlot : MonoBehaviour, IDropHandler
 {
-    public static event Action<OrbItem, OrbItem> OnOrbsUpdated;
+    public static event Action OnOrbsUpdated;
     public void OnDrop(PointerEventData eventData)
     {
         GameObject orbDropped = eventData.pointerDrag;
@@ -19,7 +19,7 @@ public class OrbInventorySlot : MonoBehaviour, IDropHandler
         orbItemDrag.SetDroppedTransform(transform);
         orbItemDrag.SetTransform();
 
-        OnOrbsUpdated?.Invoke(orbItemDrag, currentOrbItem);
+        OnOrbsUpdated?.Invoke();
     }
 
     public void RemoveItemFromInventory(OrbData orbData)

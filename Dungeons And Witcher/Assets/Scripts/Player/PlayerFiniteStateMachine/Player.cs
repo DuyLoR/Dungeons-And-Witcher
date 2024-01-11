@@ -56,7 +56,6 @@ public class Player : MonoBehaviour, IDamageable
         stateMachine.Initialize(idleState);
         playerCollector.Initialize(this);
         currentHeal = playerData.maxHp;
-        Debug.Log(currentHeal);
         facingDirection = 1;
         HealBar.instance.SetMaxHealth(currentHeal);
     }

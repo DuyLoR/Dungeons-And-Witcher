@@ -13,5 +13,11 @@ public class WeaponData : ScriptableObject
     public float rechargeTime = .2f;
     public int maxMana = 100;
     public int manaRegen = 10;
+    [HideInInspector]
     public OrbData[] orbDatas;
+    public OrbData[] inputOrbDatas;
+    public void Initialize()
+    {
+        orbDatas = inputOrbDatas;
+    }
 }

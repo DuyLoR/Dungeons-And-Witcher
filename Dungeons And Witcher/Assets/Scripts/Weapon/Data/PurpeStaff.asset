@@ -13,14 +13,19 @@ MonoBehaviour:
   m_Name: PurpeStaff
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 7637685876544118, guid: 654043c51835fd94989f582f2bd0cc26, type: 3}
-  WeaponName: "Tr\u01B0\u1EE3ng t\xEDm"
+  WeaponName: Purpe Staff
   WeaponDescription: 
-  castDelay: 0.1
+  castDelay: 0.2
   rechargeTime: 0.5
-  maxMana: 100
-  manaCharge: 10
-  capacity: 3
+  maxMana: 50
+  manaRegen: 20
   orbDatas:
-  - {fileID: 11400000, guid: 9328ee59c4419ab4096d5b8ac73f359d, type: 2}
   - {fileID: 11400000, guid: efa17206faa396f408c792a1821fb378, type: 2}
-  - {fileID: 11400000, guid: e7de1c79eb62b7f41b162fd3131f8043, type: 2}
+  - {fileID: 11400000, guid: efa17206faa396f408c792a1821fb378, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  inputOrbDatas:
+  - {fileID: 11400000, guid: efa17206faa396f408c792a1821fb378, type: 2}
+  - {fileID: 11400000, guid: efa17206faa396f408c792a1821fb378, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}

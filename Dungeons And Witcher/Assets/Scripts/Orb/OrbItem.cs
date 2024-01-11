@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class OrbItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public static event Action<OrbData> OnOrbCollected;
+    public static event Action OnOrbDroppedOnMap;
     public OrbData orbData;
     public Transform parentAfterDrag { get; private set; }
     public Transform droppedTransform { get; private set; }
@@ -39,7 +40,10 @@ public class OrbItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragHand
         if (droppedTransform == Player.Instance.transform)
         {
             var orb = Instantiate(orbData.orbPrefab);
+            orb.GetComponent<Orb>().enabled = false;
+            orb.GetComponent<SpriteRenderer>().flipY = false;
             orb.transform.position = droppedTransform.position;
+            OnOrbDroppedOnMap?.Invoke();
             Destroy(gameObject);
         }
         else

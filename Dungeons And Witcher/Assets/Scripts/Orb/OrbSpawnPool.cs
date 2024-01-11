@@ -26,7 +26,6 @@ public class OrbSpawnPool : MonoBehaviour
     {
         int index = GetOrbIndex(instanceToAdd);
         if (index == -1) return;
-        instanceToAdd.GetComponent<Orb>().enabled = false;
         instanceToAdd.SetActive(false);
         availableObjects[index].Enqueue(instanceToAdd);
     }
@@ -45,6 +44,7 @@ public class OrbSpawnPool : MonoBehaviour
     }
     public GameObject GetFromPool(GameObject orb)
     {
+        orb.GetComponent<Orb>().enabled = true;
         int index = GetOrbIndex(orb);
         if (availableObjects[index].Count == 0)
         {

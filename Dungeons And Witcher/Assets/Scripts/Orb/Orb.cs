@@ -13,14 +13,14 @@ public class Orb : MonoBehaviour
     private void OnEnable()
     {
         rb = GetComponent<Rigidbody2D>();
+        orbActiveTimer = Time.time;
     }
 
     private void Update()
     {
-        orbActiveTimer += Time.deltaTime;
-        if (orbActiveTimer >= orbData.timeActive)
+        if (Time.time >= orbActiveTimer + orbData.timeActive)
         {
-            orbActiveTimer = 0;
+            orbActiveTimer = Time.time;
             OrbSpawnPool.Instance.AddToPool(gameObject);
         }
     }

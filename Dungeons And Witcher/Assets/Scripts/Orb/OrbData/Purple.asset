@@ -16,8 +16,8 @@ MonoBehaviour:
   orbName: Purple Orb
   orbDescription: 
   type: 0
-  manaUse: 5
+  manaUse: 10
   damage: 10
-  orbSpeed: 20
-  castDelay: 0.1
-  timeActive: 1
+  orbSpeed: 30
+  castDelay: 0.2
+  timeActive: 0.1

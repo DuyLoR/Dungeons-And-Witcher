@@ -5,15 +5,12 @@ using UnityEngine.UI;
 public class HealBar : MonoBehaviour
 {
     public static HealBar instance;
-    public Slider slider;
+    public Slider slider { get; private set; }
     public TextMeshProUGUI text { get; private set; }
 
     private void Awake()
     {
         instance = this;
-    }
-    private void Start()
-    {
         slider = GetComponent<Slider>();
         text = GetComponentInChildren<TextMeshProUGUI>();
     }

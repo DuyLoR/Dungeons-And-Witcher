@@ -39,6 +39,7 @@ public class InventoryManager : MonoBehaviour
         GenerateOrbSlot();
         for (int i = 0; i < InventoryData.startWeaponDatas.Length; i++)
         {
+            InventoryData.startWeaponDatas[i].Initialize();
             AddWeapon(InventoryData.startWeaponDatas[i]);
         }
         for (int i = 0; i < InventoryData.startOrbDatas.Length; i++)
