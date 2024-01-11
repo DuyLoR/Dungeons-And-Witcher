@@ -13,6 +13,7 @@ public class PlayerInputHandle : MonoBehaviour
     public bool dashInput { get; private set; }
     public bool collectorInput { get; private set; }
     public bool inventoryInput { get; private set; }
+    public bool EscapeInput { get; private set; }
     private void FixedUpdate()
     {
         mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
@@ -78,6 +79,17 @@ public class PlayerInputHandle : MonoBehaviour
         if (context.started)
         {
             inventoryInput = !inventoryInput;
+        }
+    }
+    public void OnEscapeInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            EscapeInput = true;
+        }
+        else if (context.canceled)
+        {
+            EscapeInput = false;
         }
     }
 }
