@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: SimpleRandomWalkParameter_LargeDungeon
   m_EditorClassIdentifier: 
   iterations: 20
-  minRoomSizeX: 16
-  maxRoomSizeX: 20
-  minRoomSizeY: 16
-  maxRoomSizeY: 24
+  minRoomSizeX: 20
+  maxRoomSizeX: 30
+  minRoomSizeY: 26
+  maxRoomSizeY: 36
   startRandomlyEachIteration: 0

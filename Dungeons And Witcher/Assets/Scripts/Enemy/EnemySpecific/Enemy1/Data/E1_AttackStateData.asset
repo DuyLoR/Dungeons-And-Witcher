@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53bd80e646beb20468ad00204f2a072a, type: 3}
   m_Name: E1_AttackStateData
   m_EditorClassIdentifier: 
-  attackSpeed: 20
+  attackSpeed: 15
+  timeToAttack: 2

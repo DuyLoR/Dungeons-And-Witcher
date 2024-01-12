@@ -15,9 +15,14 @@ public class WeaponData : ScriptableObject
     public int manaRegen = 10;
     [HideInInspector]
     public OrbData[] orbDatas;
+
     public OrbData[] inputOrbDatas;
     public void Initialize()
     {
-        orbDatas = inputOrbDatas;
+        orbDatas = new OrbData[inputOrbDatas.Length];
+        for (int i = 0; i < orbDatas.Length; i++)
+        {
+            orbDatas[i] = inputOrbDatas[i];
+        }
     }
 }

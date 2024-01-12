@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class OrbItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
+public class OrbItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public static event Action<OrbData> OnOrbCollected;
     public static event Action OnOrbDroppedOnMap;
@@ -19,7 +19,6 @@ public class OrbItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragHand
         image.sprite = orbData.orbPrefab.GetComponent<SpriteRenderer>().sprite;
         image.preserveAspect = true;
     }
-
     public void OnBeginDrag(PointerEventData eventData)
     {
         parentAfterDrag = transform.parent;
@@ -78,5 +77,16 @@ public class OrbItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragHand
         ToolTip.instance.gameObject.SetActive(false);
     }
 
-
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (!PlayerInputHandle.Instance.rightMouse)
+        {
+            if (WeaponInfo.instance.GetEntryOrbSlot() != null)
+            {
+                SetDroppedTransform(WeaponInfo.instance.GetEntryOrbSlot());
+                SetTransform();
+                WeaponInfo.instance.UpdateOrbsWeaponData();
+            }
+        }
+    }
 }

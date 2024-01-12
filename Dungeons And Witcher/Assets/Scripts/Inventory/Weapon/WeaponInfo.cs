@@ -17,12 +17,12 @@ public class WeaponInfo : MonoBehaviour
     [SerializeField] private TextMeshProUGUI capacity;
 
     [Header("Orb")]
-    [SerializeField] private Transform orbsPanel;
+    [SerializeField] public Transform orbsPanel;
     [SerializeField] private GameObject orbSlotPrefab;
     [SerializeField] private GameObject orbItemPrefab;
 
     [SerializeField] private List<OrbInventorySlot> orbInventorySlots = new List<OrbInventorySlot>();
-    [SerializeField] private List<OrbItem> orbItems = new List<OrbItem>();
+    [SerializeField] public List<OrbItem> orbItems = new List<OrbItem>();
 
     [Header("Parent")]
     [SerializeField] private Transform weaponInfoPanel;
@@ -136,7 +136,7 @@ public class WeaponInfo : MonoBehaviour
             }
         }
     }
-    private void UpdateOrbsWeaponData()
+    public void UpdateOrbsWeaponData()
     {
         if (weaponData == null) return;
         if (weaponData.orbDatas.Length == 0) return;
@@ -168,6 +168,17 @@ public class WeaponInfo : MonoBehaviour
             }
         }
         return -1;
+    }
+    public Transform GetEntryOrbSlot()
+    {
+        for (int i = 0; i < orbItems.Count; i++)
+        {
+            if (orbItems[i] == null)
+            {
+                return orbsPanel.GetChild(i).transform;
+            }
+        }
+        return null;
     }
     public bool isWeaponDataNotNull()
     {

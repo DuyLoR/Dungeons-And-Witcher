@@ -81,7 +81,7 @@ public class Player : MonoBehaviour, IDamageable
         {
             weapon.SetWeaponMouseTarget(inputHandle.mousePos);
             FixPositionWeapon();
-            weapon.CheckIfAttack(inputHandle.attackInput && !inputHandle.inventoryInput);
+            weapon.CheckIfAttack(inputHandle.attackInput && !inputHandle.inventoryInput && !inputHandle.escapeInput);
             weapon.CheckIfShouldFlip(facingDirection);
             weapon.RotationAngleOfWeapon();
         }
@@ -153,6 +153,8 @@ public class Player : MonoBehaviour, IDamageable
     public void DestroyGameObject()
     {
         //TODO: Spawn item after destroy
+        GameObject.Find("UI").SetActive(false);
+        GameOver.instance.gameObject.SetActive(true);
         gameObject.SetActive(false);
     }
 }

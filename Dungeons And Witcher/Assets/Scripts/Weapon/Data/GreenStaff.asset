@@ -16,20 +16,20 @@ MonoBehaviour:
   WeaponName: Green
   WeaponDescription: 
   castDelay: 0.1
-  rechargeTime: 2
+  rechargeTime: 1
   maxMana: 120
-  manaRegen: 20
+  manaRegen: 30
   orbDatas:
+  - {fileID: 11400000, guid: 9328ee59c4419ab4096d5b8ac73f359d, type: 2}
+  - {fileID: 11400000, guid: 9328ee59c4419ab4096d5b8ac73f359d, type: 2}
   - {fileID: 0}
-  - {fileID: 11400000, guid: 9328ee59c4419ab4096d5b8ac73f359d, type: 2}
-  - {fileID: 11400000, guid: 9328ee59c4419ab4096d5b8ac73f359d, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   inputOrbDatas:
+  - {fileID: 11400000, guid: 9328ee59c4419ab4096d5b8ac73f359d, type: 2}
+  - {fileID: 11400000, guid: 9328ee59c4419ab4096d5b8ac73f359d, type: 2}
   - {fileID: 0}
-  - {fileID: 11400000, guid: 9328ee59c4419ab4096d5b8ac73f359d, type: 2}
-  - {fileID: 11400000, guid: 9328ee59c4419ab4096d5b8ac73f359d, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

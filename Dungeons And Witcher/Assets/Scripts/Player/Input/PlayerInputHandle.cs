@@ -13,7 +13,8 @@ public class PlayerInputHandle : MonoBehaviour
     public bool dashInput { get; private set; }
     public bool collectorInput { get; private set; }
     public bool inventoryInput { get; private set; }
-    public bool EscapeInput { get; private set; }
+    public bool escapeInput { get; set; }
+    public bool rightMouse { get; private set; }
     private void FixedUpdate()
     {
         mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
@@ -85,11 +86,18 @@ public class PlayerInputHandle : MonoBehaviour
     {
         if (context.started)
         {
-            EscapeInput = true;
+            escapeInput = !escapeInput;
+        }
+    }
+    public void OnRightMouseInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            rightMouse = true;
         }
         else if (context.canceled)
         {
-            EscapeInput = false;
+            rightMouse = false;
         }
     }
 }

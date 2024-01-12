@@ -14,7 +14,7 @@ public class LevelLoader : MonoBehaviour
     }
     public void LoadScene()
     {
-        GetComponentInChildren<Canvas>().sortingOrder = 1;
+        GetComponentInChildren<Canvas>().sortingOrder = 2;
         StartCoroutine(Loading(SceneManager.GetActiveScene().buildIndex == 0 ? 1 : 0));
     }
 

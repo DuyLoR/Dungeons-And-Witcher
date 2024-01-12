@@ -194,7 +194,6 @@ public class InventoryManager : MonoBehaviour
         OrbItem orbItem = newOrbItem.GetComponent<OrbItem>();
         orbItem.InitializeOrbItem(orbData);
     }
-
     public void RemoveOrb(Transform parent, OrbData orbData)
     {
         for (int i = 0; i < weaponInventorySlots.Length; i++)
