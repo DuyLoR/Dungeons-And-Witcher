@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class EscapeUI : MonoBehaviour
 {
+    public static EscapeUI instance;
     public CanvasGroup canvasGroup;
-    private bool isResumeBtnClick;
     private void Awake()
     {
+        instance = this;
         canvasGroup = GetComponent<CanvasGroup>();
     }
     private void Update()
@@ -25,13 +26,13 @@ public class EscapeUI : MonoBehaviour
     {
         Application.Quit();
     }
-    private void ActiveUI()
+    public void ActiveUI()
     {
         canvasGroup.alpha = 1;
         canvasGroup.blocksRaycasts = true;
         canvasGroup.interactable = true;
     }
-    private void DeActiveUI()
+    public void DeActiveUI()
     {
         canvasGroup.alpha = 0;
         canvasGroup.blocksRaycasts = false;
