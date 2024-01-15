@@ -10175,6 +10175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab:
   - {fileID: 5518947551292730460, guid: 6d7c1b8808dca4e43b7854f90c205893, type: 3}
+  - {fileID: 2325531440111725473, guid: f25794a6b2afe53479ede86eb7acfee0, type: 3}
   minRoomEnemyCount: 2
   maxRoomEnemyCount: 5
   parent: {fileID: 738179183}

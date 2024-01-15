@@ -76,7 +76,7 @@ public class EnemyPlacer : MonoBehaviour
             {
                 return;
             }
-            GameObject enemy = Instantiate(enemyPrefab[UnityEngine.Random.Range(0, enemyPrefab.Count - 1)]);
+            GameObject enemy = Instantiate(enemyPrefab[UnityEngine.Random.Range(0, enemyPrefab.Count)]);
             enemy.transform.SetParent(parent);
             enemy.transform.localPosition = (Vector2)room.PositionsAccessibleFromPath[i] + Vector2.one * 0.5f;
             enemy.GetComponent<EnemyBase>().SetRoom(room);
