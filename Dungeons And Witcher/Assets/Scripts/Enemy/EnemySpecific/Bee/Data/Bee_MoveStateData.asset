@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Bee_MoveStateData
   m_EditorClassIdentifier: 
   movementSpeed: 5
-  minMoveTime: 5
-  maxMoveTime: 10
+  minMoveTime: 3
+  maxMoveTime: 7

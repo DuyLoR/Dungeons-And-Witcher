@@ -28,12 +28,14 @@ public class EscapeUI : MonoBehaviour
     }
     public void ActiveUI()
     {
+        Time.timeScale = 0f;
         canvasGroup.alpha = 1;
         canvasGroup.blocksRaycasts = true;
         canvasGroup.interactable = true;
     }
     public void DeActiveUI()
     {
+        Time.timeScale = 1f;
         canvasGroup.alpha = 0;
         canvasGroup.blocksRaycasts = false;
         canvasGroup.interactable = false;

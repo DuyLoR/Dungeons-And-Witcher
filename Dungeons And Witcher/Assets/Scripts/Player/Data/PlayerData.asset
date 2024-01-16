@@ -17,6 +17,7 @@ MonoBehaviour:
   dashCooldown: 1
   dashVelocity: 16
   dashTime: 0.4
+  takendameDelay: 1
   collectRadius: 1
   canCollectLayer:
     serializedVersion: 2

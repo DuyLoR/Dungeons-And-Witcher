@@ -8,7 +8,7 @@ public class Hearth : MonoBehaviour, ICollectible
     private int maxHpCollect = 30;
     public void Collect()
     {
-        Player.Instance.UpHp(Random.Range(minHpCollect, maxHpCollect));
+        Player.Instance.UpCurrentHeal(Random.Range(minHpCollect, maxHpCollect));
         Destroy(gameObject);
     }
 }

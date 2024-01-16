@@ -60,7 +60,7 @@ public class WeaponInfo : MonoBehaviour
         manaRegenTMP.text = weaponData.manaRegen.ToString();
         castDelayTMP.text = weaponData.castDelay.ToString();
         rechargeTimeTMP.text = weaponData.rechargeTime.ToString();
-        castDelayTMP.text = (weaponData.orbDatas.Length - 1).ToString();
+        capacity.text = (weaponData.orbDatas.Length).ToString();
 
         GenerateOrbSlots();
         GenerateOrbItems();

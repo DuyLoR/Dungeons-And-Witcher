@@ -28,4 +28,8 @@ public class HealBar : MonoBehaviour
         slider.value = health;
         text.text = slider.value.ToString() + "/" + slider.maxValue.ToString();
     }
+    public int GetMaxHealth()
+    {
+        return (int)slider.maxValue;
+    }
 }

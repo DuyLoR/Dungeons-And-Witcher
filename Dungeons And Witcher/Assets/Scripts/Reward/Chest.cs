@@ -7,6 +7,8 @@ public class Chest : MonoBehaviour
     private List<GameObject> orbItems = new List<GameObject>();
     [SerializeField]
     private GameObject healItem;
+    [SerializeField]
+    private GameObject rellicUI;
     //[SerializeField]
     //private float force = 0.5f;
 
@@ -19,7 +21,13 @@ public class Chest : MonoBehaviour
     }
     private void SpawnItem()
     {
-        if (Random.Range(0, orbItems.Count - 1) == 0)
+        if (Random.Range(0, 2) == 0)
+        {
+            Time.timeScale = 0f;
+            Instantiate(rellicUI, UI.instance.transform);
+            return;
+        }
+        else if (Random.Range(0, 2) == 0)
         {
             Instantiate(healItem, transform);
             return;

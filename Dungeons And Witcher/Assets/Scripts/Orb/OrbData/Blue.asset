@@ -16,8 +16,8 @@ MonoBehaviour:
   orbName: Blue Orb
   orbDescription: 
   type: 0
-  manaUse: 5
-  damage: 5
+  manaUse: 10
+  damage: 7
   orbSpeed: 20
   castDelay: 0.1
-  timeActive: 0.5
+  timeActive: 0.8

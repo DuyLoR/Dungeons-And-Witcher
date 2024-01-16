@@ -20,6 +20,8 @@ public class EnemyDeadState : EnemyState
         base.Enter();
         isDeadtimeOver = false;
         enemyBase.agent.isStopped = true;
+        enemyBase.SetVelocity(0f);
+        enemyBase.rb.AddForce(Vector2.zero);
         enemyBase.GetComponent<Collider2D>().enabled = false;
         enemyBase.GetComponent<SpriteRenderer>().sortingLayerName = "Obstacles";
     }

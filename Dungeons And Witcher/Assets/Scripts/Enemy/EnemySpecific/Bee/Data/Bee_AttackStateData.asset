@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Bee_AttackStateData
   m_EditorClassIdentifier: 
   attackSpeed: 400
-  timeToAttack: 2
+  timeToAttack: 1

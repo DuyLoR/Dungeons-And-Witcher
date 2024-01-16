@@ -28,6 +28,7 @@ public class Player : MonoBehaviour, IDamageable
     private float takendameTimer;
 
     private int currentHeal;
+    public int upMomentSpeed;
 
     private bool weaponHasBeenSet = false;
     private bool isTakendameOver;
@@ -56,6 +57,7 @@ public class Player : MonoBehaviour, IDamageable
         stateMachine.Initialize(idleState);
         playerCollector.Initialize(this);
         currentHeal = playerData.maxHp;
+        upMomentSpeed = 0;
         facingDirection = 1;
         HealBar.instance.SetMaxHealth(currentHeal);
     }
@@ -145,7 +147,7 @@ public class Player : MonoBehaviour, IDamageable
         }
         HealBar.instance.SetHealth(currentHeal);
     }
-    public void UpHp(int amount)
+    public void UpCurrentHeal(int amount)
     {
         currentHeal += amount;
         HealBar.instance.SetHealth(currentHeal);

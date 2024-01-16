@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b75993ba34978a845ac35d3d665a6d5d, type: 3}
-  m_Name: Bee_IdleStateData
+  m_Script: {fileID: 11500000, guid: 76be0aa6c77c3814ba22aa0d7b2c45ff, type: 3}
+  m_Name: Heal
   m_EditorClassIdentifier: 
-  minIdleTime: 1
-  maxIdleTime: 4
+  Name: Max Hp
+  value: 10

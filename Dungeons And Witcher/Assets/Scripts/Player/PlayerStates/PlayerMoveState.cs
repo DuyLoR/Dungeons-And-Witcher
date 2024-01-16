@@ -27,7 +27,7 @@ public class PlayerMoveState : PlayerState
 
         if (!isExitingState)
         {
-            player.SetVelocity(playerData.movementVelocity * input);
+            player.SetVelocity((playerData.movementVelocity + player.upMomentSpeed) * input);
             player.CheckIfShouldFlip(mousePos);
             if (input == Vector2.zero)
             {
