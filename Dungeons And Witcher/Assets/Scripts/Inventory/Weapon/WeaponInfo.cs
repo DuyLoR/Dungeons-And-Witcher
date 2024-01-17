@@ -49,10 +49,6 @@ public class WeaponInfo : MonoBehaviour
         {
             InitializeWeaponInfo();
         }
-        for (int i = 0; i < orbItems.Count; i++)
-        {
-            Debug.Log(orbItems[i]);
-        }
     }
 
 

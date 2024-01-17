@@ -13,10 +13,6 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
         tilemapVisualizer.Clear();
         tilemapVisualizer.PaintFloorTiles(floorPositions);
         WallGenerator.CreateWalls(floorPositions, tilemapVisualizer);
-        foreach (var position in floorPositions)
-        {
-            Debug.Log(position);
-        }
     }
 
     protected HashSet<Vector2Int> RunRandomWalk(SimpleRandomWalkSO parameters, Vector2Int position)

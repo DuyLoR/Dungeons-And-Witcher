@@ -15,8 +15,8 @@ public class EnemyBase : MonoBehaviour
     public int facingDirection { get; private set; }
 
     private Vector2 velocityWorkspace;
+    private float timer;
     private bool isDamageToPlayer;
-
     public virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -69,10 +69,27 @@ public class EnemyBase : MonoBehaviour
             if (collision.CompareTag("Player"))
             {
                 isDamageToPlayer = true;
+                timer = Time.time;
                 damageable.Damage(enemyBaseData.damage);
             }
         }
 
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        IDamageable damageable = collision.GetComponent<IDamageable>();
+        if (Time.time >= timer + Player.Instance.playerData.takendameDelay)
+        {
+            isDamageToPlayer = false;
+        }
+        if (damageable != null && !isDamageToPlayer)
+        {
+            if (collision.CompareTag("Player"))
+            {
+                isDamageToPlayer = true;
+                damageable.Damage(enemyBaseData.damage);
+            }
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
