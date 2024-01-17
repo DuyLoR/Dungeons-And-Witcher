@@ -12,6 +12,7 @@ public class ToolTip : MonoBehaviour
     [SerializeField] private TextMeshProUGUI castDelayTMP;
     [SerializeField] private TextMeshProUGUI timeActiveTMP;
 
+    public OrbItem currentOrbItem;
     private void Awake()
     {
         instance = this;
@@ -27,6 +28,7 @@ public class ToolTip : MonoBehaviour
     }
     public void GenerateToolTip(OrbItem orbItem)
     {
+        currentOrbItem = orbItem;
         nameTMP.text = orbItem.orbData.orbName.ToString();
         typeTMP.text = orbItem.orbData.type.ToString();
         manaUseTMP.text = orbItem.orbData.manaUse.ToString();

@@ -20,4 +20,4 @@ MonoBehaviour:
   damage: 10
   orbSpeed: 20
   castDelay: 0.2
-  timeActive: 0.5
+  timeActive: 0.6

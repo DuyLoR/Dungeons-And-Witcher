@@ -205,6 +205,19 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
+    public Transform GetEntryOrbSlot()
+    {
+        for (int i = 0; i < orbInventorySlots.Length; i++)
+        {
+            OrbInventorySlot orbSlot = orbInventorySlots[i];
+            OrbItem orbItemInSlot = orbSlot.GetComponentInChildren<OrbItem>();
+            if (orbItemInSlot == null)
+            {
+                return orbSlot.transform;
+            }
+        }
+        return null;
+    }
     public OrbData GetFirstOrb()
     {
         OrbInventorySlot orbSlot = orbInventorySlots[0];

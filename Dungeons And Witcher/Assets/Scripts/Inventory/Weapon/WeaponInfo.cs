@@ -49,6 +49,10 @@ public class WeaponInfo : MonoBehaviour
         {
             InitializeWeaponInfo();
         }
+        for (int i = 0; i < orbItems.Count; i++)
+        {
+            Debug.Log(orbItems[i]);
+        }
     }
 
 
@@ -69,35 +73,16 @@ public class WeaponInfo : MonoBehaviour
     private void GenerateOrbItems()
     {
         ClearOrbItems();
-        if (weaponData.orbDatas.Length == 0) return;
-        for (int i = 0; i < weaponData.orbDatas.Length; i++)
+        int orbDataLength = weaponData.orbDatas.Length;
+        for (int i = 0; i < orbInventorySlots.Count; i++)
         {
-            if (orbItems.Count <= i)
+            orbItems.Add(null);
+            if (i >= orbDataLength)
             {
-                OrbItem orbItemInSlot = orbInventorySlots[i].GetComponentInChildren<OrbItem>();
-                if (orbItemInSlot == null)
-                {
-                    if (weaponData.orbDatas[i] == null)
-                    {
-                        orbItems.Add(null);
-                        continue;
-                    }
-                    orbItems.Add(Instantiate(orbItemPrefab, orbInventorySlots[i].transform).GetComponent<OrbItem>());
-                    orbItems[i].InitializeOrbItem(weaponData.orbDatas[i]);
-                }
-                else
-                {
-                    if (weaponData.orbDatas[i] == null)
-                    {
-                        continue;
-                    }
-                    orbItems[i] = Instantiate(orbItemPrefab, orbInventorySlots[i].transform).GetComponent<OrbItem>();
-                    orbItems[i].InitializeOrbItem(weaponData.orbDatas[i]);
-                }
+                continue;
             }
-            else
+            if (weaponData.orbDatas[i] != null)
             {
-                if (weaponData.orbDatas[i] == null) continue;
                 orbItems[i] = Instantiate(orbItemPrefab, orbInventorySlots[i].transform).GetComponent<OrbItem>();
                 orbItems[i].InitializeOrbItem(weaponData.orbDatas[i]);
             }
@@ -111,30 +96,27 @@ public class WeaponInfo : MonoBehaviour
         {
             if (orbItems[i] == null) continue;
             Destroy(orbItems[i].gameObject);
-            orbItems[i] = null;
         }
+        orbItems.Clear();
     }
 
     private void GenerateOrbSlots()
     {
+        ClearOrbSlots();
         for (int i = 0; i < weaponData.orbDatas.Length; i++)
         {
-            if (orbInventorySlots.Count <= i)
-            {
-                orbInventorySlots.Add(Instantiate(orbSlotPrefab, orbsPanel).GetComponent<OrbInventorySlot>());
-            }
-            else
-            {
-                orbInventorySlots[i].gameObject.SetActive(true);
-            }
+            orbInventorySlots.Add(Instantiate(orbSlotPrefab, orbsPanel).GetComponent<OrbInventorySlot>());
         }
-        if (orbInventorySlots.Count > weaponData.orbDatas.Length)
+    }
+    private void ClearOrbSlots()
+    {
+        if (orbInventorySlots.Count == 0) return;
+        for (int i = 0; i < orbInventorySlots.Count; i++)
         {
-            for (int i = weaponData.orbDatas.Length; i < orbInventorySlots.Count; i++)
-            {
-                orbInventorySlots[i].gameObject.SetActive(false);
-            }
+            if (orbInventorySlots[i] == null) continue;
+            Destroy(orbInventorySlots[i].gameObject);
         }
+        orbInventorySlots.Clear();
     }
     public void UpdateOrbsWeaponData()
     {

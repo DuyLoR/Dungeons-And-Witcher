@@ -15,6 +15,6 @@ MonoBehaviour:
   popupPrefabs: {fileID: 5481636594500660941, guid: 40f382199207ec2448a383fda7f80edb, type: 3}
   attackRange: 4
   targetRange: 10
-  maxHeal: 55
+  maxHeal: 65
   damage: 15
   attackDelay: 0.3

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f6331ecfa705f042a2bb2dd11181a0b, type: 3}
   m_Name: SimpleRandomWalkParameter_LargeDungeon
   m_EditorClassIdentifier: 
-  iterations: 20
-  minRoomSizeX: 20
+  iterations: 1
+  minRoomSizeX: 16
   maxRoomSizeX: 30
-  minRoomSizeY: 26
+  minRoomSizeY: 20
   maxRoomSizeY: 36
   startRandomlyEachIteration: 0

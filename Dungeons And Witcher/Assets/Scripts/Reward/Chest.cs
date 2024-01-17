@@ -9,8 +9,8 @@ public class Chest : MonoBehaviour
     private GameObject healItem;
     [SerializeField]
     private GameObject rellicUI;
-    //[SerializeField]
-    //private float force = 0.5f;
+    [SerializeField]
+    private WeaponData weaponItem;
 
     private bool isOpened = false;
 
@@ -21,20 +21,26 @@ public class Chest : MonoBehaviour
     }
     private void SpawnItem()
     {
-        if (Random.Range(0, 2) == 0)
+        float randomValue = Random.value;
+        if (randomValue < 0.1)
+        {
+            Instantiate(weaponItem.weaponPrefab, transform);
+        }
+        else if (randomValue < 0.2f)
         {
             Time.timeScale = 0f;
             Instantiate(rellicUI, UI.instance.transform);
-            return;
         }
-        else if (Random.Range(0, 2) == 0)
+        else if (randomValue < 0.4f)
         {
             Instantiate(healItem, transform);
-            return;
         }
-        var orbItem = orbItems[Random.Range(0, orbItems.Count - 1)];
-        var newOrbItem = Instantiate(orbItem, transform);
-        newOrbItem.GetComponent<Orb>().enabled = false;
+        else
+        {
+            var orbItem = orbItems[Random.Range(0, orbItems.Count - 1)];
+            var newOrbItem = Instantiate(orbItem, transform);
+            newOrbItem.GetComponent<Orb>().enabled = false;
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

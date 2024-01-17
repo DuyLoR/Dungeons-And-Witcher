@@ -4,10 +4,12 @@ public class EscapeUI : MonoBehaviour
 {
     public static EscapeUI instance;
     public CanvasGroup canvasGroup;
+    private bool isFreezeTime;
     private void Awake()
     {
         instance = this;
         canvasGroup = GetComponent<CanvasGroup>();
+        isFreezeTime = false;
     }
     private void Update()
     {
@@ -20,6 +22,7 @@ public class EscapeUI : MonoBehaviour
     }
     public void ReturnMainMenu()
     {
+        PlayerInputHandle.Instance.escapeInput = false;
         LevelLoader.instance.LoadScene();
     }
     public void Quit()
@@ -28,14 +31,22 @@ public class EscapeUI : MonoBehaviour
     }
     public void ActiveUI()
     {
-        Time.timeScale = 0f;
+        if (!isFreezeTime)
+        {
+            Time.timeScale = 0f;
+            isFreezeTime = true;
+        }
         canvasGroup.alpha = 1;
         canvasGroup.blocksRaycasts = true;
         canvasGroup.interactable = true;
     }
     public void DeActiveUI()
     {
-        Time.timeScale = 1f;
+        if (isFreezeTime)
+        {
+            Time.timeScale = 1f;
+            isFreezeTime = false;
+        }
         canvasGroup.alpha = 0;
         canvasGroup.blocksRaycasts = false;
         canvasGroup.interactable = false;

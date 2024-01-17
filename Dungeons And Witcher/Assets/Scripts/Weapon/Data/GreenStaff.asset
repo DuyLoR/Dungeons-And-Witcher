@@ -13,23 +13,13 @@ MonoBehaviour:
   m_Name: GreenStaff
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 7637685876544118, guid: 8c1d13841a515344891868f25ccf6125, type: 3}
-  WeaponName: Green
+  WeaponName: Green Staff
   WeaponDescription: 
   castDelay: 0.1
-  rechargeTime: 1
-  maxMana: 120
-  manaRegen: 30
+  rechargeTime: 0.2
+  maxMana: 60
+  manaRegen: 40
   orbDatas:
-  - {fileID: 11400000, guid: 9328ee59c4419ab4096d5b8ac73f359d, type: 2}
-  - {fileID: 11400000, guid: 9328ee59c4419ab4096d5b8ac73f359d, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: efa17206faa396f408c792a1821fb378, type: 2}
   inputOrbDatas:
   - {fileID: 11400000, guid: 9328ee59c4419ab4096d5b8ac73f359d, type: 2}
-  - {fileID: 11400000, guid: 9328ee59c4419ab4096d5b8ac73f359d, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}

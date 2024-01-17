@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: BlueSraff
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 7637685876544118, guid: 6d9c5bbf649bf984fb77e729e6cb942d, type: 3}
-  WeaponName: 
+  WeaponName: Blue Staff
   WeaponDescription: 
   castDelay: 0.1
-  rechargeTime: 0.2
-  maxMana: 100
+  rechargeTime: 0.3
+  maxMana: 200
   manaRegen: 10
   orbDatas:
   - {fileID: 11400000, guid: 9328ee59c4419ab4096d5b8ac73f359d, type: 2}
@@ -25,6 +25,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   inputOrbDatas:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: efa17206faa396f408c792a1821fb378, type: 2}
+  - {fileID: 11400000, guid: e7de1c79eb62b7f41b162fd3131f8043, type: 2}
   - {fileID: 0}

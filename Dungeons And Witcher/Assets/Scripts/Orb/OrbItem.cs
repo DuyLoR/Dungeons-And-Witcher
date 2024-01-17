@@ -12,12 +12,17 @@ public class OrbItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragHand
     public Transform droppedTransform { get; private set; }
 
     private Image image;
+    private bool isRightMouseClick;
     public void InitializeOrbItem(OrbData neworbData)
     {
         this.orbData = neworbData;
         image = GetComponent<Image>();
         image.sprite = orbData.orbPrefab.GetComponent<SpriteRenderer>().sprite;
         image.preserveAspect = true;
+    }
+    private void Update()
+    {
+        isRightMouseClick = PlayerInputHandle.Instance.rightMouse;
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -79,14 +84,36 @@ public class OrbItem : MonoBehaviour, ICollectible, IBeginDragHandler, IDragHand
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!PlayerInputHandle.Instance.rightMouse)
+        if (isRightMouseClick)
         {
-            if (WeaponInfo.instance.GetEntryOrbSlot() != null)
+            OrbInventorySlot orbInventorySlot = gameObject.transform.parent.GetComponent<OrbInventorySlot>();
+            GameObject orbSlotParent = orbInventorySlot.transform.parent.gameObject;
+            if (orbSlotParent.name == "OrbInventoryPanel")
             {
-                SetDroppedTransform(WeaponInfo.instance.GetEntryOrbSlot());
-                SetTransform();
-                WeaponInfo.instance.UpdateOrbsWeaponData();
+                if (WeaponInfo.instance.GetEntryOrbSlot() != null)
+                {
+                    SetDroppedTransform(WeaponInfo.instance.GetEntryOrbSlot());
+                    SetTransform();
+                    WeaponInfo.instance.UpdateOrbsWeaponData();
+                }
             }
+            else if (orbSlotParent.name == "OrbsPanel")
+            {
+                if (InventoryManager.Instance.GetEntryOrbSlot() != null)
+                {
+                    SetDroppedTransform(InventoryManager.Instance.GetEntryOrbSlot());
+                    SetTransform();
+                    WeaponInfo.instance.UpdateOrbsWeaponData();
+                }
+            }
+
+        }
+    }
+    private void OnDestroy()
+    {
+        if (ToolTip.instance.isActiveAndEnabled && ToolTip.instance.currentOrbItem == this)
+        {
+            ToolTip.instance.gameObject.SetActive(false);
         }
     }
 }

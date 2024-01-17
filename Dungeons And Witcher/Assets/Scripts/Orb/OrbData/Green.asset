@@ -16,8 +16,8 @@ MonoBehaviour:
   orbName: Green Orb
   orbDescription: 
   type: 0
-  manaUse: 20
-  damage: 15
+  manaUse: 30
+  damage: 25
   orbSpeed: 15
-  castDelay: 0.3
+  castDelay: 0.5
   timeActive: 1

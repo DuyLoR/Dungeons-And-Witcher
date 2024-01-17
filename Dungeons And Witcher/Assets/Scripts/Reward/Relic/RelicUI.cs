@@ -14,6 +14,7 @@ public class RelicUI : MonoBehaviour
     private List<Button> relicBtns = new List<Button>();
     private void Start()
     {
+        Time.timeScale = 0f;
         for (int i = 0; i < maxRelicInUI; i++)
         {
             Button newButton = Instantiate(relicBtnPrefab, transform);

@@ -152,3 +152,4 @@ MonoBehaviour:
   - {fileID: 3256075246616101981, guid: e3c3a1ca39b486a4eb3a73159d67ae38, type: 3}
   healItem: {fileID: 689191578016544216, guid: dbc9503a75d42b44c91fdb9f673a3fa9, type: 3}
   rellicUI: {fileID: 2061886084503775233, guid: 1c25082c7792de84bbff97421d24098d, type: 3}
+  weaponItem: {fileID: 11400000, guid: f0a9af67b09840940b01140256bb0b0e, type: 2}
