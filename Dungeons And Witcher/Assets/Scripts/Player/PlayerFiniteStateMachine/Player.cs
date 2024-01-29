@@ -64,7 +64,7 @@ public class Player : MonoBehaviour, IDamageable
     private void Update()
     {
         stateMachine.currentState.LogicUpdate();
-        if (Time.time >= takendameTimer + playerData.takendameDelay)
+        if (Time.time >= takendameTimer + playerData.takendameDelay && currentHeal > 0)
         {
             isTakendameOver = true;
         }
@@ -130,23 +130,20 @@ public class Player : MonoBehaviour, IDamageable
     public void Damage(int amount)
     {
         if (!isTakendameOver) return;
-        takendameTimer = Time.time;
-        isTakendameOver = false;
-        currentHeal = (currentHeal - amount) < 0 ? 0 : (currentHeal - amount);
-
-        if (currentHeal <= 0)
-        {
-            stateMachine.ChangeState(deadState);
-        }
-        else
-        {
-            stateMachine.ChangeState(takendameState);
-        }
-
+        stateMachine.ChangeState(takendameState);
+        currentHeal -= amount;
         GameObject popUp = Instantiate(playerData.popupPrefabs, transform.position, Quaternion.identity, transform);
         TextMeshPro txt = popUp.GetComponent<TextMeshPro>();
         txt.text = amount.ToString();
         HealBar.instance.SetHealth(currentHeal);
+        takendameTimer = Time.time;
+        isTakendameOver = false;
+        if (currentHeal <= 0)
+        {
+            stateMachine.ChangeState(deadState);
+        }
+
+
     }
     public void UpCurrentHeal(int amount)
     {
